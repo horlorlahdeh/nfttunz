@@ -1,38 +1,204 @@
-.App {
-  text-align: center;
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+p {
+  margin: 0;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+button {
+  border: none;
+  outline: none;
+  box-shadow: none;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+button:focus {
+  outline: none !important;
+  border: none !important;
+  box-shadow: transparent !important;
+}
+input {
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+}
+input:focus {
+  border-color: transparent !important;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+.nfttunz__navbar__toggler {
+  border: none;
+  outline: none;
+}
+.nfttunz__navbar__toggler:hover i {
+  color: #000;
+}
+.nfttunz__navbar__toggler:focus {
+  border: none;
+  outline: none;
+}
+.nfttunz__navbar {
+  color: #000 !important;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 25px;
+  width: 100%;
+  border-bottom: 8px solid #eee;
+}
+.nfttunz__navbar button {
+  color: #000 !important;
+}
+.nfttunz__navbar__search__wrapper {
+  background-color: #eee;
+  display: flex;
+  border-radius: 15px;
+}
+.nfttunz__navbar__search__wrapper input {
+  background-color: transparent;
+  border: none;
+}
+
+.nfttunz__navbar__search__main__wrapper {
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+}
+.nfttunz__navbar__search__wrapper button {
+  border: none;
+  outline: none;
+  color: #eee;
+}
+.nfttunz__navbar__search__wrapper button:hover {
+  background: transparent;
+}
+.nfttunz__navbar__search__wrapper button:focus {
+  box-shadow: transparent;
+}
+.nfttunz__navbar__search__wrapper button i {
+  color: rgb(189, 184, 184);
+}
+.nfttunz__navbar__links__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+}
+.nfttunz__navbar__links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nfttunz__navbar__links li a {
+  padding: 0 25px;
+  color: rgb(122, 118, 118);
+  font-weight: bold;
+  font-size: 14px;
+}
+.nfttunz__main__header__overlay {
+  padding: 100px 0px;
+  background-color: rgba(0, 0, 0, 0.452);
+}
+.nfttunz__main__header {
+  background-image: url("https://images.pexels.com/photos/2111015/pexels-photo-2111015.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  margin-bottom: 50px;
+  /* height: 90vh; */
 }
 
-.App-link {
-  color: #61dafb;
+.header__title {
+  margin-bottom: 50px;
+  color: #fff;
+}
+.header__title h1 {
+  font-size: 50px;
+}
+.header__button {
+  margin-top: 50px;
+}
+.header__button a {
+  background: #5e5e5e;
+  padding: 12px 20px;
+  text-decoration: none;
+  border-radius: 20px;
+  color: #fff;
+  font-weight: bold;
+  border: 0.4px solid transparent;
+  transition: 1s all ease-in;
+}
+.header__button a:hover {
+  cursor: pointer;
+  border: 1px solid #fff;
+  background: transparent;
+  color: #fff;
+}
+.section__title {
+  margin-bottom: 30px;
+}
+.section__title h2 {
+  font-weight: bold;
+}
+.tag__wrapper {
+  display: block;
+  font-size: 15px;
+  line-height: 25px;
+  font-weight: 700;
+  margin-right: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: -webkit-inline-box;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 3px 5px 0 rgb(0 0 0 / 8%);
+  color: #5e5e5e;
+  padding: 0.4rem;
+  padding-right: 0.85rem;
+  text-decoration: none;
+  text-transform: capitalize;
+  -webkit-transition: 0.1s all ease;
+  transition: 0.1s all ease;
+}
+.tags__wrapper {
+  display: flex;
+}
+.tag__wrapper img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+.tag__wrapper a {
+  color: #5e5e5e;
+  text-decoration: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.hide__sm {
+  display: none;
+}
+
+/* Mobile Stuff */
+@media screen and (max-width: 600px) {
+  .nfttunz__navbar {
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+  .nfttunz__navbar__links__wrapper {
+    margin: 15px 0px;
+  }
+  .nfttunz__navbar__search__main__wrapper {
+    margin: 0px 0px 15px;
+  }
+  .tags__wrapper {
+    display: block;
+  }
+  .tag__wrapper {
+    margin-bottom: 10px;
   }
 }
