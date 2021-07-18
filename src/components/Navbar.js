@@ -7,7 +7,7 @@ const Navbar = () => {
     <Fragment>
       <nav className="navbar p-0">
         <div className="nfttunz__navbar">
-          <Link className="navbar-brand" href="#!">
+          <Link className="navbar-brand" to="/">
             <img src={logo} alt="nav logo" width={60} />
           </Link>
           <button
@@ -28,18 +28,18 @@ const Navbar = () => {
           >
             <ul className="nfttunz__navbar__links">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" href="#!">
+                <Link className="nav-link active" aria-current="page" to="/activity">
                   Activity
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" href="#!">
+                <Link className="nav-link" to="/gallery">
                   Gallery
                 </Link>
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link" href="#!">
+                <Link className="nav-link" to="/profile">
                   Profile
                 </Link>
               </li>

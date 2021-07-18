@@ -3,6 +3,10 @@ body {
   margin: 0;
   padding: 0;
 }
+a {
+  text-decoration: none;
+  color: #212529;
+}
 p {
   margin: 0;
 }
@@ -160,7 +164,7 @@ input:focus {
   box-shadow: 0 3px 5px 0 rgb(0 0 0 / 8%);
   color: #5e5e5e;
   padding: 0.4rem;
-  padding-right: 0.85rem;
+  padding-right: 0.65rem;
   text-decoration: none;
   text-transform: capitalize;
   -webkit-transition: 0.1s all ease;
@@ -168,6 +172,8 @@ input:focus {
 }
 .tags__wrapper {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .tag__wrapper img {
   width: 30px;
@@ -179,6 +185,77 @@ input:focus {
   color: #5e5e5e;
   text-decoration: none;
 }
+.footer__wrapper {
+  padding: 30px 0px;
+}
+.footer__wrapper p {
+  background: #eeecec;
+  color: #000;
+  border-radius: 20px;
+  max-width: max-content;
+  margin: auto;
+  padding: 5px 20px;
+}
+.music__card__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  margin: 10px 0;
+  padding: 10px 0px;
+  box-shadow: 0 3px 5px 0 rgb(0 0 0 / 8%);
+}
+.music__card__title {
+  padding: 10px 0px;
+}
+.music__card__title h4 {
+font-size: 14px;
+font-weight: 700;
+}
+.music__card__footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.music__card__artiste {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.music__card__artiste small {
+  font-size: 8px;
+  text-align: center;
+  align-self: center;
+}
+.music__card__artiste h6 {
+  font-size: 14px;
+}
+.music__card__extras {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.music__card__extras h6 {
+ font-size: 11px;
+ margin-right: 5px;
+}
+.play__button {
+  padding: 10px 0px;
+  display: flex;
+}
+.play__button button {
+  padding: 2px 4px;
+  background: #000;
+  color: #fff;
+  font-size: 6px;
+  border-radius: 8px;
+  margin: auto;
+}
+
+
 
 .hide__sm {
   display: none;

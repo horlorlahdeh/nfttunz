@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-// import hero from '../assets/images/hero.jpg'
 
-const Header = () => {
+
+const Header = ({title, button}) => {
   return (
     <Fragment>
       <section className="nfttunz__main__header">
@@ -11,14 +11,14 @@ const Header = () => {
             <div className="row">
               <div className="col-md-12">
                 <div className="header__title text-center">
-                  <h1>Collectible, Scarce, Tokenized Music</h1>
+                  <h1>{title}</h1>
                 </div>
-                <div className="header__hero text-center">
-                  
-                </div>
-                <div className="header__button text-center">
-                  <Link to="/">Get Started</Link>
-                </div>
+                <div className="header__hero text-center"></div>
+                {button && (
+                  <div className="header__button text-center">
+                    <Link to="/">Get Started</Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>
