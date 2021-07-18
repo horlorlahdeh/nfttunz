@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import Cards from '../components/Cards'
+import Cards from '../components/cards/Cards'
 import Header from '../components/Header'
 import Layout from '../components/Layout'
 import Tags from '../components/Tags'
