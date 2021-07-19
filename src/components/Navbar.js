@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
 import logo from '../assets/images/logo_gray_scale.png'
 import {users} from '../reducers/users'
@@ -68,13 +68,11 @@ const Navbar = ({ isShowLogIn, isShow }) => {
             </ul>
           </div>
           <div className="nfttunz__navbar__search__main__wrapper">
-            <button className="nfttunz__login__button margin__right" onClick={toogleAction}>
-              Login
-            </button>
             <form className="d-flex">
               <div className="nfttunz__navbar__search__wrapper">
                 <input
-                value={search} onChange={(e) => setSearch(e.target.value)}
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
                   className="nfttunz__navbar__search__input"
                   type="search"
                   placeholder="Search"
@@ -85,6 +83,13 @@ const Navbar = ({ isShowLogIn, isShow }) => {
                 </button>
               </div>
             </form>
+            <button
+              className="nfttunz__login__button margin__left"
+              onClick={toogleAction}
+            >
+              Login
+            </button>
+            <img src="" alt="avatar" width={30} />
           </div>
         </div>
       </nav>
@@ -92,4 +97,4 @@ const Navbar = ({ isShowLogIn, isShow }) => {
   );
 };
 
-export default Navbar;
+export default withRouter(Navbar);

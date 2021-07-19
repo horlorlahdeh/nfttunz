@@ -36,6 +36,9 @@ input:focus {
 .margin__right {
   margin-right: 10px;
 }
+.margin__left {
+  margin-left: 10px;
+}
 .nfttunz__navbar__toggler {
   border: none;
   outline: none;
@@ -55,6 +58,9 @@ input:focus {
   padding: 5px 25px;
   width: 100%;
   border-bottom: 8px solid #eee;
+}
+.nfttunz__navbar__brand {
+  width: 250px;
 }
 .nfttunz__navbar button {
   color: #000 !important;
@@ -218,6 +224,13 @@ input:focus {
 .music__card__title {
   padding: 10px 0px;
 }
+.music__card__thumbnail {
+  text-align: center;
+}
+.music__card__thumbnail img {
+  width: 130px;
+  object-fit: contain;
+}
 .music__card__title h4 {
 font-size: 14px;
 font-weight: 700;
@@ -269,7 +282,12 @@ font-weight: 700;
 .hide__sm {
   display: none;
 }
-
+/* Medium */
+@media screen and (max-width: 900px) {
+  .nfttunz__navbar__brand {
+    width: auto;
+  }
+}
 /* Mobile Stuff */
 @media screen and (max-width: 600px) {
   .nfttunz__navbar {
