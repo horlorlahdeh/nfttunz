@@ -40,7 +40,6 @@ export const processLogin = (username, ts, sig) => async (dispatch) => {
       params: { username, ts, sig, ref },
     });
     console.log(data.data);
-    // Cookies.set("refresh_token", data.data.refreshToken);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: data.data,

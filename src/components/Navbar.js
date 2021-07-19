@@ -89,7 +89,13 @@ const Navbar = ({ isShowLogIn, isShow }) => {
             >
               Login
             </button>
-            <img src="" alt="avatar" width={30} />
+            <div className="nfftunz__avatar__wrapper margin__left">
+              <img
+                src="https://cdn.nfttunz.io/avatars/034f7b9ee2d1d7b852ed850f26cb773c.png"
+                alt="avatar"
+                width={30}
+              />
+            </div>
           </div>
         </div>
       </nav>

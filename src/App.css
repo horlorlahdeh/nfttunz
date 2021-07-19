@@ -86,6 +86,7 @@ input:focus {
   align-items: center;
   justify-content: center;
 }
+
 .nfttunz__navbar__search__wrapper button {
   border: none;
   outline: none;
@@ -120,6 +121,14 @@ input:focus {
   font-weight: bold;
   font-size: 14px;
 }
+.nfftunz__avatar__wrapper {
+  background-color: #eee;
+  border-radius: 50%;
+  padding: 6px;
+}
+.nfftunz__avatar__wrapper img {
+  border-radius: 50%;
+}
 .nfttunz__main__header__overlay {
   padding: 100px 0px;
   background-color: rgba(0, 0, 0, 0.452);
@@ -129,6 +138,7 @@ input:focus {
   margin-bottom: 50px;
   /* height: 90vh; */
 }
+
 
 .header__title {
   margin-bottom: 50px;
@@ -232,8 +242,8 @@ input:focus {
   object-fit: contain;
 }
 .music__card__title h4 {
-font-size: 14px;
-font-weight: 700;
+  font-size: 14px;
+  font-weight: 700;
 }
 .music__card__footer {
   display: flex;
@@ -261,8 +271,8 @@ font-weight: 700;
   align-items: center;
 }
 .music__card__extras h6 {
- font-size: 11px;
- margin-right: 5px;
+  font-size: 11px;
+  margin-right: 5px;
 }
 .play__button {
   padding: 10px 0px;
@@ -277,12 +287,15 @@ font-weight: 700;
   margin: auto;
 }
 
-
-
 .hide__sm {
   display: none;
 }
 /* Medium */
+@media screen and (min-width: 1700px) {
+  .nfttunz__navbar__brand {
+    width: 5300px;
+  }
+}
 @media screen and (max-width: 900px) {
   .nfttunz__navbar__brand {
     width: auto;
@@ -297,7 +310,12 @@ font-weight: 700;
     margin: 15px 0px;
   }
   .nfttunz__navbar__search__main__wrapper {
+    flex-direction: column;
     margin: 0px 0px 15px;
+  }
+  .nfttunz__navbar__search__main__wrapper button {
+    display: block;
+    margin-top: 10px;
   }
   .tags__wrapper {
     display: block;
