@@ -1,8 +1,26 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import logo from '../assets/images/logo_gray_scale.png'
+import {users} from '../reducers/users'
 
-const Navbar = () => {
+
+const Navbar = ({ isShowLogIn, isShow }) => {
+  const [search, setSearch] = useState('');
+  const auth = useSelector(users);
+
+  const toogleAction = () => {
+    if (!auth.authenticated) {
+      
+      isShowLogIn(!isShow);
+    } else {
+      const answer = window.confirm("Are you sure to log out?");
+      if (answer) {
+        console.log("Logging Out");
+      }
+    }
+  };
+
   return (
     <Fragment>
       <nav className="navbar p-0">
@@ -20,7 +38,7 @@ const Navbar = () => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <i class="fas fa-bars" style={{ color: "#9CA0A3" }}></i>
+            <i className="fas fa-bars" style={{ color: "#9CA0A3" }}></i>
           </button>
           <div
             className="nfttunz__navbar__links__wrapper"
@@ -28,7 +46,11 @@ const Navbar = () => {
           >
             <ul className="nfttunz__navbar__links">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/activity">
+                <Link
+                  className="nav-link active"
+                  aria-current="page"
+                  to="/activity"
+                >
                   Activity
                 </Link>
               </li>
@@ -46,9 +68,13 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="nfttunz__navbar__search__main__wrapper">
+            <button className="nfttunz__login__button margin__right" onClick={toogleAction}>
+              Login
+            </button>
             <form className="d-flex">
               <div className="nfttunz__navbar__search__wrapper">
                 <input
+                value={search} onChange={(e) => setSearch(e.target.value)}
                   className="nfttunz__navbar__search__input"
                   type="search"
                   placeholder="Search"

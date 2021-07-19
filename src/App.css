@@ -33,6 +33,9 @@ input:focus {
   outline: none;
   box-shadow: none;
 }
+.margin__right {
+  margin-right: 10px;
+}
 .nfttunz__navbar__toggler {
   border: none;
   outline: none;
@@ -60,6 +63,12 @@ input:focus {
   background-color: #eee;
   display: flex;
   border-radius: 15px;
+}
+.nfttunz__login__button {
+  background-color: #eee;
+  display: flex;
+  border-radius: 15px;
+  padding: 6px 12px;
 }
 .nfttunz__navbar__search__wrapper input {
   background-color: transparent;
