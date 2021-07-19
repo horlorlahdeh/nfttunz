@@ -1,21 +1,22 @@
 import React, { Fragment, useState } from "react";
-import { Link, withRouter } from "react-router-dom";
-import { useSelector } from "react-redux";
-import logo from '../assets/images/logo_gray_scale.png'
-import {users} from '../reducers/users'
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import logo from "../assets/images/logo_gray_scale.png";
+import { logout } from "../actions/users";
 
+// import { users } from "../reducers/users";
 
-const Navbar = ({ isShowLogIn, isShow }) => {
-  const [search, setSearch] = useState('');
-  const auth = useSelector(users);
+const Navbar = ({ isShowLogIn, isShow, auth, logout }) => {
+  const [search, setSearch] = useState("");
+  // const auth = useSelector(users);
 
   const toogleAction = () => {
     if (!auth.authenticated) {
-      
       isShowLogIn(!isShow);
     } else {
       const answer = window.confirm("Are you sure to log out?");
       if (answer) {
+        logout();
         console.log("Logging Out");
       }
     }
@@ -83,19 +84,21 @@ const Navbar = ({ isShowLogIn, isShow }) => {
                 </button>
               </div>
             </form>
+            {auth.authenticated && (
+              <div className="nfftunz__avatar__wrapper margin__left">
+                <img
+                  src="https://cdn.nfttunz.io/avatars/034f7b9ee2d1d7b852ed850f26cb773c.png"
+                  alt="avatar"
+                  width={30}
+                />
+              </div>
+            )}
             <button
               className="nfttunz__login__button margin__left"
               onClick={toogleAction}
             >
-              Login
+              {!auth.authenticated ? "Login" : "Logout"}
             </button>
-            <div className="nfftunz__avatar__wrapper margin__left">
-              <img
-                src="https://cdn.nfttunz.io/avatars/034f7b9ee2d1d7b852ed850f26cb773c.png"
-                alt="avatar"
-                width={30}
-              />
-            </div>
           </div>
         </div>
       </nav>
@@ -103,4 +106,8 @@ const Navbar = ({ isShowLogIn, isShow }) => {
   );
 };
 
-export default withRouter(Navbar);
+const mapStateToProps = (state) => ({
+  auth: state.users,
+});
+
+export default connect(mapStateToProps, { logout })(Navbar);

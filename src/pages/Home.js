@@ -1,12 +1,13 @@
 import React from "react";
+import { connect } from "react-redux";
 import Cards from "../components/cards/Cards";
 import Header from "../components/Header";
 import Layout from "../components/Layout";
 import Tags from "../components/Tags";
-import {songs, tags} from '../utils/constants'
+import {songs, tags} from '../utils/constants';
 
 const Home = () => {
- 
+  
   return (
     <Layout>
       <Header title="Collectible, Scarce, Tokenized Music" button={true} />
@@ -34,5 +35,7 @@ const Home = () => {
     </Layout>
   );
 };
-
-export default Home;
+const mapStateToProps = state => ({
+  loading: state.users.loading
+})
+export default connect(mapStateToProps, {})(Home);

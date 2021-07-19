@@ -3,25 +3,34 @@ import { login } from "../actions/users";
 import Footer from "./Footer";
 import LoginModal from "./modals/LoginModal";
 import Navbar from "./Navbar";
-import { useDispatch } from "react-redux";
+import { connect, useDispatch } from "react-redux";
+import Loader from "./Loader";
+// import { useEffect } from "react";
+import { SET_LOADING } from "../actions/types";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, auth }) => {
   const [username, setUsername] = useState("");
   const [isShow, setIsShow] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const setUsernameField = (e) => {
     setUsername(e.target.value);
   };
 
   const loginUser = () => {
-    console.log(username);
+    dispatch({ type: SET_LOADING, payload: true });
     dispatch(login(username));
     setIsShow(false);
+    dispatch({ type: SET_LOADING, payload: false });
   };
   const hideModal = () => {
     setIsShow(false);
   };
-  return (
+ 
+  if (auth.loading) return <Loader />;
+  return auth.loading && !auth.authenticated ? (
+    <Loader />
+  ) : (!auth.loading &&
     <Fragment>
       <Navbar isShowLogIn={setIsShow} isShow={isShow} />
       <main>{children}</main>
@@ -36,5 +45,7 @@ const Layout = ({ children }) => {
     </Fragment>
   );
 };
-
-export default Layout;
+const mapStateToProps = (state) => ({
+  auth: state.users,
+});
+export default connect(mapStateToProps, {})(Layout);

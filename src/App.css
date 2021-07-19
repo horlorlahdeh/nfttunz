@@ -39,6 +39,14 @@ input:focus {
 .margin__left {
   margin-left: 10px;
 }
+.nfttunz__loader__wrapper {
+  z-index: 999;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(219, 191, 191);
+}
 .nfttunz__navbar__toggler {
   border: none;
   outline: none;
@@ -136,7 +144,7 @@ input:focus {
 .nfttunz__main__header {
   background-image: url("https://images.pexels.com/photos/2111015/pexels-photo-2111015.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
   margin-bottom: 50px;
-  /* height: 90vh; */
+  background-size: cover;
 }
 
 

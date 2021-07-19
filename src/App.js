@@ -6,11 +6,20 @@ import Profile from './pages/Profile'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import store from "./store";
+import { useEffect } from "react";
+import { loadUser } from "./actions/users";
+import setAuthToken from "./utils/setAuthToken";
+import "react-toastify/dist/ReactToastify.css";
 
-
+const token = localStorage.getItem("token");
+if (token) {
+  setAuthToken(token);
+}
 function App() {
+  useEffect(() => {
+    store.dispatch(loadUser())
+  }, [])
   return (
     <div className="App">
       <Router>

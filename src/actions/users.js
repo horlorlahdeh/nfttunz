@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS } from "./types";
+import { LOGIN_SUCCESS, AUTH_ERROR, SET_USER, LOGOUT } from "./types";
 import { setToastNotification } from "../utils/helpers";
 import axios from "../utils/axios";
 import setAuthToken from "../utils/setAuthToken";
@@ -45,7 +45,7 @@ export const processLogin = (username, ts, sig) => async (dispatch) => {
       payload: data.data,
     });
     setAuthToken(data.data.token);
-
+    
     // TODO Login BeeChatter and Fetch Notifications
     // await dispatch('message/beeChatLogin', { username, ts, sig }, { root: true })
     // await dispatch('fetchNotifications')
@@ -53,3 +53,38 @@ export const processLogin = (username, ts, sig) => async (dispatch) => {
     console.log(err.message);
   }
 };
+
+export const loadUser = () => async (dispatch) => {
+  try {
+    const username = localStorage.getItem("username");
+
+    let data = await axios.get(
+      "/auth/me",
+      { params: { username } },
+      {
+        withCredentials: true,
+      }
+    );
+    console.log(data.data);
+
+    dispatch({
+      type: SET_USER,
+      payload: data.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+    });
+    console.log(err.message);
+  }
+};
+
+
+
+export const logout = () => async dispatch => {
+  dispatch({type: LOGOUT})
+}
+
+
+
+
