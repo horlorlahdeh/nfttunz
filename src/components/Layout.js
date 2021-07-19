@@ -11,7 +11,7 @@ import { SET_LOADING } from "../actions/types";
 const Layout = ({ children, auth }) => {
   const [username, setUsername] = useState("");
   const [isShow, setIsShow] = useState(false);
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const setUsernameField = (e) => {
     setUsername(e.target.value);
@@ -21,19 +21,20 @@ const Layout = ({ children, auth }) => {
     dispatch({ type: SET_LOADING, payload: true });
     dispatch(login(username));
     setIsShow(false);
-    dispatch({ type: SET_LOADING, payload: false });
+    // setLoading(false);
+    // dispatch({ type: SET_LOADING, payload: false });
   };
   const hideModal = () => {
     setIsShow(false);
   };
- 
-  if (auth.loading) return <Loader />;
-  return auth.loading && !auth.authenticated ? (
-    <Loader />
-  ) : (!auth.loading &&
+
+  // if (auth.loading === true) {
+  //   return <Loader />;
+  // }
+  return (
     <Fragment>
-      <Navbar isShowLogIn={setIsShow} isShow={isShow} />
-      <main>{children}</main>
+      <Navbar isShowLogIn={setIsShow} isShow={isShow} loading={loading} handleLoading={setLoading} />
+      {auth.loading ? <Loader /> : <main>{children}</main>}
       <LoginModal
         show={isShow}
         handleClose={hideModal}

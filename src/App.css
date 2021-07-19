@@ -45,7 +45,6 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(219, 191, 191);
 }
 .nfttunz__navbar__toggler {
   border: none;
