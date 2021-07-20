@@ -12,6 +12,7 @@ import { loadUser } from "./actions/users";
 import setAuthToken from "./utils/setAuthToken";
 import "react-toastify/dist/ReactToastify.css";
 import MintToken from "./pages/MintToken";
+import { getChainSettings } from "./actions/settings";
 
 const token = localStorage.getItem("token");
 if (token) {
@@ -20,6 +21,7 @@ if (token) {
 function App() {
   useEffect(() => {
     store.dispatch(loadUser())
+    store.dispatch(getChainSettings())
   }, [])
   return (
     <div className="App">

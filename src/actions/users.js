@@ -39,7 +39,7 @@ export const processLogin = (username, ts, sig) => async (dispatch) => {
     const data = await axios.get("/auth/login", {
       params: { username, ts, sig, ref },
     });
-    console.log(data.data);
+   
     dispatch({
       type: LOGIN_SUCCESS,
       payload: data.data,
@@ -65,7 +65,6 @@ export const loadUser = () => async (dispatch) => {
         withCredentials: true,
       }
     );
-    console.log(data.data);
 
     dispatch({
       type: SET_USER,

@@ -11,6 +11,7 @@ const initialState = {
   authenticated: false,
   loading: true,
   token: localStorage.getItem("token"),
+  smartLock: false
 };
 // export const users = (state) => state;
 export default function usersReducer(state = initialState, action) {

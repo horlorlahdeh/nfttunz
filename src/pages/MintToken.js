@@ -1,15 +1,19 @@
 import React, { Fragment, useState } from "react";
+import { connect } from "react-redux";
 import Header from "../components/Header";
 import Layout from "../components/Layout";
+import { createToken } from "../actions/token";
 
-const MintToken = () => {
+const MintToken = ({ createToken }) => {
   const [formData, setFormData] = useState({
     name: "",
     collectionName: "",
     description: "",
-    rights: "Public",
+    rights: "public",
     tags: "",
     editions: 1,
+    contentCategory: 'audio',
+    notes: "Lorem lipsum"
   });
   const [agreed, setAgreed] = useState(false);
   const [agreements, setAgreements] = useState([]);
@@ -19,7 +23,8 @@ const MintToken = () => {
   const [nfFile, setNftFile] = useState("");
   const [fileName, setFileName] = useState("");
 
-  const { name, collectionName, description, rights, tags, editions } = formData;
+  const { name, collectionName, description, rights, tags, editions, contentCategory, notes } =
+    formData;
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -46,13 +51,27 @@ const MintToken = () => {
   };
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (agreements.length < 8) {
-      alert("You must agree to all eight terms");
-      return
-    }
+    // if (agreements.length < 8) {
+    //   alert("You must agree to all eight terms");
+    //   return;
+    // }
+    const payload = {
+      action: "mint",
+      name: name,
+      collection: collectionName,
+      category: 'category',
+      rights: rights,
+      editions: editions,
+      nsfw: nsfw,
+      type: contentCategory,
+      thumbnail: 'thumbnailURL',
+      file: 'fileURL',
+      notes: notes,
+      tags: tags,
+      description: description,
+    };
     // Do something keychain to broadcast transactions
-    console.log(formData);
-    console.log(agreements);
+    createToken(payload)
   };
 
   return (
@@ -172,7 +191,12 @@ const MintToken = () => {
                       <div className="nfttunz__input__wrapper nfttunz__input__border w-50">
                         <input
                           value={editions}
-                          onChange={(e)=> setFormData({...formData, editions: e.target.value})}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              editions: e.target.value,
+                            })
+                          }
                           className="nfttunz__input"
                           type="number"
                           placeholder="Number of editions*"
@@ -409,5 +433,7 @@ const MintToken = () => {
     </Fragment>
   );
 };
-
-export default MintToken;
+const mapStateToProps = (state) => ({
+  token: state.token,
+});
+export default connect(mapStateToProps, { createToken })(MintToken);
