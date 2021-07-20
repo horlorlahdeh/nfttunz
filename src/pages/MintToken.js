@@ -7,22 +7,51 @@ const MintToken = () => {
     name: "",
     collectionName: "",
     description: "",
-    rights: "",
-    nsfw: false,
+    rights: "Public",
     tags: "",
+    editions: 1,
   });
-  const [file, setFile] = useState("");
+  const [agreed, setAgreed] = useState(false);
+  const [agreements, setAgreements] = useState([]);
+  const [nsfw, setNsfw] = useState(false);
+  const [thumbnail, setThumbnail] = useState("");
+  const [thumbnailName, setThumbnailName] = useState("");
+  const [nfFile, setNftFile] = useState("");
+  const [fileName, setFileName] = useState("");
 
-  const { name, collectionName, description, rights, nsfw, tags } = formData;
+  const { name, collectionName, description, rights, tags, editions } = formData;
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  const handleFileUploads = () => {
-    let prepData = new FormData();
+
+  const onAgreementCheck = (e) => {
+    let checkElem = document.getElementById(`${e.target.name}`);
+    if (agreements.includes(e.target.value) && !checkElem.checked) {
+      let updatedAgreements = agreements.filter(
+        (agr) => agr !== e.target.value
+      );
+      setAgreements([...updatedAgreements]);
+      return;
+    }
+    setAgreements([...agreements, e.target.value]);
+  };
+  const handleThumbnailUpload = (e) => {
+    console.log(e.target.files[0]);
+    setThumbnail(e.target.files[0]);
+    setThumbnailName(e.target.files[0].name);
+  };
+  const handleFileUpload = (e) => {
+    console.log(e.target.files[0]);
+    setNftFile(e.target.files[0]);
+    setFileName(e.target.files[0].name);
   };
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (agreements.length < 8) {
+      alert("You must agree to all eight terms");
+    }
     // Do something keychain to broadcast transactions
     console.log(formData);
+    console.log(agreements);
   };
 
   return (
@@ -48,7 +77,7 @@ const MintToken = () => {
               <div className="col-md-2"></div>
               <div className="col-md-8">
                 <div className="mint__form__wrapper">
-                  <form className="mint__form" onSubmit={onSubmit}>
+                  <form className="mint__form" onSubmit={(e) => onSubmit(e)}>
                     <div className="double__input__row">
                       <div className="nfttunz__input__wrapper nfttunz__input__border w-50">
                         <input
@@ -78,34 +107,36 @@ const MintToken = () => {
                         <input
                           placeholder="Enter your password again"
                           className="steps__input hidden"
-                          name="avatar"
-                          id="avatar"
+                          name="thumbnail"
+                          id="thumbnail"
                           type="file"
-                          onChange={handleFileUploads}
+                          onChange={handleThumbnailUpload}
                           style={{ display: "none" }}
                         />
                         <label
                           className="custom-file-label upload__button"
-                          htmlFor="avatar"
+                          htmlFor="thumbnail"
                         >
-                          Choose Cover
+                          {thumbnailName?.length > 0
+                            ? thumbnailName
+                            : "Choose thumbnail"}
                         </label>
                       </div>
                       <div className="nfttunz__input__wrapper nfttunz__file__wrapper">
                         <input
                           placeholder="Enter your password again"
                           className="steps__input hidden"
-                          name="avatar"
-                          id="avatar"
+                          name="nftFile"
+                          id="nftFile"
                           type="file"
-                          onChange={handleFileUploads}
+                          onChange={handleFileUpload}
                           style={{ display: "none" }}
                         />
                         <label
                           className="custom-file-label upload__button"
-                          htmlFor="avatar"
+                          htmlFor="nftFile"
                         >
-                          Choose File
+                          {fileName?.length > 0 ? fileName : "Choose file"}
                         </label>
                       </div>
                     </div>
@@ -126,19 +157,20 @@ const MintToken = () => {
                       <div className="nfttunz__input__wrapper nfttunz__input__border w-50 d-flex">
                         <select
                           className="nfttunz__select w-100"
-                          name="editions"
-                          id="editions"
+                          name="rights"
+                          id="rights"
+                          onChange={onChange}
                         >
-                          <option value="" disabled>
+                          <option value={rights} disabled>
                             Select rights
                           </option>
                           <option value="Private">Private</option>
-                          <option value="Private">Public</option>
+                          <option value="Public">Public</option>
                         </select>
                       </div>
                       <div className="nfttunz__input__wrapper nfttunz__input__border w-50">
                         <input
-                          value={file}
+                          value={editions}
                           onChange={onChange}
                           className="nfttunz__input"
                           type="number"
@@ -162,7 +194,8 @@ const MintToken = () => {
                     <div className="double__input__row">
                       <div className="nfttunz__input__wrapper nfttunz__input__border w-100">
                         <input
-                          value={file}
+                          value={tags}
+                          name="tags"
                           onChange={onChange}
                           className="nfttunz__input"
                           type="text"
@@ -171,14 +204,17 @@ const MintToken = () => {
                         />
                       </div>
                     </div>
+
+                    {/* Agreements */}
                     <div className="double__input__row">
                       <div className="nfttunz__input__wrapper nfttunz__input__border nfttunz__checkbox__wrapper w-100">
                         <input
-                          value={file}
-                          onChange={onChange}
+                          value="consent"
+                          name="consent"
+                          id="consent"
+                          onChange={onAgreementCheck}
                           className="nfttunz__checkbox"
                           type="checkbox"
-                          placeholder="Enter tags* separated by space"
                           aria-label="Search"
                         />
                         <label
@@ -194,11 +230,12 @@ const MintToken = () => {
                     <div className="double__input__row">
                       <div className="nfttunz__input__wrapper nfttunz__input__border nfttunz__checkbox__wrapper w-100">
                         <input
-                          value={file}
-                          onChange={onChange}
+                          value="copyright"
+                          name="copyright"
+                          id="copyright"
+                          onChange={onAgreementCheck}
                           className="nfttunz__checkbox"
                           type="checkbox"
-                          placeholder="Enter tags* separated by space"
                           aria-label="Search"
                         />
                         <label
@@ -215,11 +252,12 @@ const MintToken = () => {
                     <div className="double__input__row">
                       <div className="nfttunz__input__wrapper nfttunz__input__border nfttunz__checkbox__wrapper w-100">
                         <input
-                          value={file}
-                          onChange={onChange}
+                          value="tokenize"
+                          name="tokenize"
+                          id="tokenize"
+                          onChange={onAgreementCheck}
                           className="nfttunz__checkbox"
                           type="checkbox"
-                          placeholder="Enter tags* separated by space"
                           aria-label="Search"
                         />
                         <label
@@ -233,11 +271,12 @@ const MintToken = () => {
                     <div className="double__input__row">
                       <div className="nfttunz__input__wrapper nfttunz__input__border nfttunz__checkbox__wrapper w-100">
                         <input
-                          value={file}
-                          onChange={onChange}
+                          value="violence"
+                          name="violence"
+                          id="violence"
+                          onChange={onAgreementCheck}
                           className="nfttunz__checkbox"
                           type="checkbox"
-                          placeholder="Enter tags* separated by space"
                           aria-label="Search"
                         />
                         <label
@@ -252,11 +291,12 @@ const MintToken = () => {
                     <div className="double__input__row">
                       <div className="nfttunz__input__wrapper nfttunz__input__border nfttunz__checkbox__wrapper w-100">
                         <input
-                          value={file}
-                          onChange={onChange}
+                          value="sexual"
+                          name="sexual"
+                          id="sexual"
+                          onChange={onAgreementCheck}
                           className="nfttunz__checkbox"
                           type="checkbox"
-                          placeholder="Enter tags* separated by space"
                           aria-label="Search"
                         />
                         <label
@@ -272,11 +312,12 @@ const MintToken = () => {
                     <div className="double__input__row">
                       <div className="nfttunz__input__wrapper nfttunz__input__border nfttunz__checkbox__wrapper w-100">
                         <input
-                          value={file}
-                          onChange={onChange}
+                          value="borderline"
+                          name="borderline"
+                          id="borderline"
+                          onChange={onAgreementCheck}
                           className="nfttunz__checkbox"
                           type="checkbox"
-                          placeholder="Enter tags* separated by space"
                           aria-label="Search"
                         />
                         <label
@@ -291,11 +332,12 @@ const MintToken = () => {
                     <div className="double__input__row">
                       <div className="nfttunz__input__wrapper nfttunz__input__border nfttunz__checkbox__wrapper w-100">
                         <input
-                          value={file}
-                          onChange={onChange}
+                          value="banned"
+                          name="banned"
+                          id="banned"
+                          onChange={onAgreementCheck}
                           className="nfttunz__checkbox"
                           type="checkbox"
-                          placeholder="Enter tags* separated by space"
                           aria-label="Search"
                         />
                         <label
@@ -310,11 +352,12 @@ const MintToken = () => {
                     <div className="double__input__row">
                       <div className="nfttunz__input__wrapper nfttunz__input__border nfttunz__checkbox__wrapper w-100">
                         <input
-                          value={file}
-                          onChange={onChange}
+                          value="understand"
+                          name="understand"
+                          id="understand"
+                          onChange={onAgreementCheck}
                           className="nfttunz__checkbox"
                           type="checkbox"
-                          placeholder="Enter tags* separated by space"
                           aria-label="Search"
                         />
                         <label
@@ -330,11 +373,12 @@ const MintToken = () => {
                     <div className="double__input__row">
                       <div className="nfttunz__input__wrapper nfttunz__input__border nfttunz__checkbox__wrapper info__text__wrapper w-100">
                         <input
-                          value={file}
-                          onChange={onChange}
+                          value={agreed}
+                          name="agreed"
+                          id="agreed"
+                          onChange={(e) => setAgreed(!agreed)}
                           className="nfttunz__checkbox"
                           type="checkbox"
-                          placeholder="Enter tags* separated by space"
                           aria-label="Search"
                         />
                         <label
@@ -352,7 +396,7 @@ const MintToken = () => {
                     </strong>
                     <br />
                     <br />
-                    <input type="button" value="Mint Tokens" />
+                    <input type="submit" value="Mint Tokens" />
                   </form>
                 </div>
               </div>
