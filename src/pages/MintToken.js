@@ -48,6 +48,7 @@ const MintToken = () => {
     e.preventDefault();
     if (agreements.length < 8) {
       alert("You must agree to all eight terms");
+      return
     }
     // Do something keychain to broadcast transactions
     console.log(formData);
@@ -171,11 +172,11 @@ const MintToken = () => {
                       <div className="nfttunz__input__wrapper nfttunz__input__border w-50">
                         <input
                           value={editions}
-                          onChange={onChange}
+                          onChange={(e)=> setFormData({...formData, editions: e.target.value})}
                           className="nfttunz__input"
                           type="number"
                           placeholder="Number of editions*"
-                          aria-label="Search"
+                          aria-label="editions"
                         />
                       </div>
                     </div>
@@ -324,7 +325,7 @@ const MintToken = () => {
                           className="checkbox__label small__text"
                           htmlFor="avatar"
                         >
-                          Borderline pieces will be removed fromdisplay and our
+                          Borderline pieces will be removed from display and our
                           file system and not refunded.
                         </label>
                       </div>
