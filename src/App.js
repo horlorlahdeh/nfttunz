@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { loadUser } from "./actions/users";
 import setAuthToken from "./utils/setAuthToken";
 import "react-toastify/dist/ReactToastify.css";
+import MintToken from "./pages/MintToken";
 
 const token = localStorage.getItem("token");
 if (token) {
@@ -30,6 +31,7 @@ function App() {
             <Route exact path="/activity" component={Activity} />
             <Route exact path="/gallery" component={Gallery} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path='/mint' component={MintToken} />
           </Switch>
         </Provider>
       </Router>

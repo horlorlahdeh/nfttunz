@@ -8,9 +8,8 @@ import { logout } from "../actions/users";
 
 const Navbar = ({ isShowLogIn, isShow, auth, logout }) => {
   const [search, setSearch] = useState("");
-  // const auth = useSelector(users);
 
-  const toogleAction = () => {
+  const toogleAction = async () => {
     if (!auth.authenticated) {
       isShowLogIn(!isShow);
     } else {
@@ -26,7 +25,7 @@ const Navbar = ({ isShowLogIn, isShow, auth, logout }) => {
     <Fragment>
       <nav className="navbar p-0">
         <div className="nfttunz__navbar">
-          <Link className="navbar-brand" to="/">
+          <Link className="navbar-brand nfttunz__navbar__brand" to="/">
             <img src={logo} alt="nav logo" width={60} />
           </Link>
           <button
@@ -86,18 +85,20 @@ const Navbar = ({ isShowLogIn, isShow, auth, logout }) => {
             </form>
             {auth.authenticated && (
               <div className="nfftunz__avatar__wrapper margin__left">
-                <img
-                  src="https://cdn.nfttunz.io/avatars/034f7b9ee2d1d7b852ed850f26cb773c.png"
-                  alt="avatar"
-                  width={30}
-                />
+                <img src={auth.avatar} alt={auth.username} width={30} />
               </div>
             )}
             <button
-              className="nfttunz__login__button margin__left"
+              className="nfttunz__login__button margin__left d-flex"
               onClick={toogleAction}
             >
-              {!auth.authenticated ? "Login" : "Logout"}
+              {!auth.authenticated ? (
+                <span>Login</span>
+              ) : (
+                <span>
+                  {auth.username} <i className="fa fa-caret-down"></i>
+                </span>
+              )}
             </button>
           </div>
         </div>

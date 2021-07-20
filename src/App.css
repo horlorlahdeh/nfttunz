@@ -39,6 +39,21 @@ input:focus {
 .margin__left {
   margin-left: 10px;
 }
+.margin__five {
+  margin: 5px;
+}
+.margin__ten {
+  margin: 10px!important;
+}
+.padding__five {
+  padding: 5px!important
+}
+.padding__ten {
+  padding: 10px!important;
+}
+.small__text {
+  font-size: 8px!important;
+}
 .nfttunz__loader__wrapper {
   z-index: 999;
   height: 100vh;
@@ -82,6 +97,9 @@ input:focus {
   display: flex;
   border-radius: 15px;
   padding: 6px 12px;
+}
+.nfttunz__login__button {
+  font-size: 12px;
 }
 .nfttunz__navbar__search__wrapper input {
   background-color: transparent;
@@ -293,7 +311,91 @@ input:focus {
   border-radius: 8px;
   margin: auto;
 }
-
+.info__text__wrapper {
+  padding: 20px;
+  background-color: lightgreen;
+  border: 2px solid gray;
+}
+.info__text {
+  font-weight: bold;
+}
+.mint__form__wrapper {
+  margin-top: 50px;
+  padding: 20px;
+  border: 2px solid gray;
+  background: rgb(247, 255, 247);
+}
+.double__input__row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.double__input__row input {
+  
+  border: none;
+  background-color: lightgrey;
+  width: 100%;
+}
+.nfttunz__input__border {
+  border: 1px solid green;
+  margin: 5px;
+}
+.nfttunz__file__wrapper {
+  border: 1px solid green;
+  margin: 5px;
+  background-color: lightgray;
+  padding: 50px 0px;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nfttunz__textarea {
+  background-color: lightgray;
+  height: 100%;
+  padding: 6px 12px;
+  resize: none;
+}
+.nfttunz__textarea:focus {
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+.nfttunz__select {
+  padding: 6px 12px;
+  background-color: lightgray;
+}
+.nfttunz__select:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+.nfttunz__checkbox__wrapper {
+  display: flex;
+  padding: 6px 12px;
+}
+.nfttunz__checkbox__wrapper input {
+  width: auto;
+  margin-right: 10px;
+}
+.upload__button {
+  background-color: #aa0c0b;
+  color: wheat;
+  font-size: 9px;
+  border-radius: 8px;
+  padding: 5px 12px;
+  margin: 10px 0px;
+}
+.upload__button:hover {
+  cursor: pointer;
+}
+.steps__input {
+  padding: 10px;
+  width: 100%;
+  font-size: 17px;
+  font-family: Raleway;
+  border: 1px solid #aaaaaa;
+}
 .hide__sm {
   display: none;
 }
@@ -329,5 +431,9 @@ input:focus {
   }
   .tag__wrapper {
     margin-bottom: 10px;
+  }
+  .nfftunz__avatar__wrapper {
+    margin-top: 8px;
+    display: none;
   }
 }

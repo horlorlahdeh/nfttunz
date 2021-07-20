@@ -21,8 +21,6 @@ const Layout = ({ children, auth }) => {
     dispatch({ type: SET_LOADING, payload: true });
     dispatch(login(username));
     setIsShow(false);
-    // setLoading(false);
-    // dispatch({ type: SET_LOADING, payload: false });
   };
   const hideModal = () => {
     setIsShow(false);
@@ -33,7 +31,7 @@ const Layout = ({ children, auth }) => {
   // }
   return (
     <Fragment>
-      <Navbar isShowLogIn={setIsShow} isShow={isShow} loading={loading} handleLoading={setLoading} />
+      <Navbar isShowLogIn={setIsShow} isShow={isShow} loading={loading} setLoading={setLoading} />
       {auth.loading ? <Loader /> : <main>{children}</main>}
       <LoginModal
         show={isShow}
