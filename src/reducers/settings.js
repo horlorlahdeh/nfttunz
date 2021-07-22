@@ -1,6 +1,8 @@
 import { SET_SETTINGS } from "../actions/types";
 
-const intialState = {}
+const intialState = {
+    
+}
 
 
 const settingsReducer = (state = intialState, action) => {
