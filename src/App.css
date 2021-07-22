@@ -344,7 +344,8 @@ input:focus {
   border: 1px solid green;
   margin: 5px;
   background-color: lightgray;
-  padding: 50px 0px;
+  padding: 30px 0px;
+  min-height: 166px;
   width: 50%;
   display: flex;
   justify-content: center;
@@ -395,6 +396,12 @@ input:focus {
   font-size: 17px;
   font-family: Raleway;
   border: 1px solid #aaaaaa;
+}
+.button__and__loader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .hide__sm {
   display: none;
