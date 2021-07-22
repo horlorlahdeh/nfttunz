@@ -22,8 +22,6 @@ export const createToken = (tokenPayload) => async (dispatch) => {
       memo: JSON.stringify(tokenPayload),
     },
   };
-  console.log(json)
-
   const jsonData = {
     id: settings.sidechain_id,
     key: "Active",
@@ -31,16 +29,17 @@ export const createToken = (tokenPayload) => async (dispatch) => {
     message: "Issue Token",
     eventName: "issue-tokens-successful",
   };
-  
+ 
   window.hive_keychain.requestCustomJson(
     username,
     jsonData.id,
     jsonData.key,
-    JSON.stringify(json.data),
+    JSON.stringify(jsonData.data),
     jsonData.message,
     (r) => {
       if (r.success) {
-        console.log(r);
+        console.log(r)
+        setToastNotification(r.message, 'success')
       }
     }
   );
