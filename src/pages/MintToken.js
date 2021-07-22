@@ -56,6 +56,11 @@ const MintToken = ({ createToken, settings: {categories} }) => {
     setLoading(true);
     const thumbn = e.target.files[0];
     const uploadData = await uploadFile(thumbn, "thumbnail");
+    if (!uploadData) {
+      setToastNotification("Unsurported file type", "error");
+      setLoading(false);
+      return;
+    }
     setThumbnail(uploadData.data?.url);
     setThumbnailName(e.target.files[0].name);
     setProgress(uploadData.progress);
@@ -66,6 +71,11 @@ const MintToken = ({ createToken, settings: {categories} }) => {
     setFileLoading(true);
     const thumbn = e.target.files[0];
     const uploadData = await uploadFile(thumbn, "file");
+    if(!uploadData) {
+      setToastNotification('Unsurported file type', 'error');
+      setFileLoading(false)
+      return 
+    }
     setNftFile(uploadData.data?.url);
     setFileName(e.target.files[0].name);
     setProgress(uploadData.data.progress);
@@ -78,7 +88,10 @@ const MintToken = ({ createToken, settings: {categories} }) => {
       alert("You must agree to all eight terms");
       return;
     }
-
+    if(!agreed) {
+      alert('You must agree to all the terms')
+      return
+    }
     const payload = {
       action: "mint",
       name: name,

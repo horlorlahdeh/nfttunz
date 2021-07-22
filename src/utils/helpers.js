@@ -30,6 +30,10 @@ export const uploadFile = async (file, type) => {
     data_upload.append("file", file);
     data_upload.append("type", type);
     const data = await axios.post("/upload", data_upload, config);
+    if(!data) {
+      setToastNotification('Unsurpported file type', 'error')
+      return {}
+    }
     const obj = {
       data: data.data,
       progress: percentage,
