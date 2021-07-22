@@ -333,7 +333,7 @@ input:focus {
 .double__input__row input {
   
   border: none;
-  background-color: lightgrey;
+  background-color: #EEEEEE;
   width: 100%;
 }
 .nfttunz__input__border {
@@ -343,7 +343,7 @@ input:focus {
 .nfttunz__file__wrapper {
   border: 1px solid green;
   margin: 5px;
-  background-color: lightgray;
+  background-color: #EEEEEE;
   padding: 30px 0px;
   min-height: 166px;
   width: 50%;
@@ -352,7 +352,7 @@ input:focus {
   align-items: center;
 }
 .nfttunz__textarea {
-  background-color: lightgray;
+  background-color: #EEEEEE;
   height: 100%;
   padding: 6px 12px;
   resize: none;
@@ -364,7 +364,7 @@ input:focus {
 }
 .nfttunz__select {
   padding: 6px 12px;
-  background-color: lightgray;
+  background-color: #EEEEEE;
 }
 .nfttunz__select:focus {
   outline: none;
