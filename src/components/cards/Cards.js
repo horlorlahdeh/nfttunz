@@ -1,22 +1,23 @@
 import React, { Fragment } from "react";
 import Card from "./Card";
 import uuid from "uuid";
+import { connect } from "react-redux";
 
-const Cards = ({ songs }) => {
-
+const Cards = ({ songs, settings: { categories } }) => {
   return (
     <Fragment>
       {songs.map((song) => {
-        const { title, thumbnail, artiste, genre, duration } = song;
+        const { collection_name, thumbnail, creator, category, type, series } = song;
         const id = uuid();
         return (
           <div key={id} className="col-md-2 mt-4">
             <Card
-              title={title}
+              title={collection_name}
               thumbnail={thumbnail}
-              artiste={artiste}
-              genre={genre}
-              duration={duration}
+              artiste={creator}
+              genre={category}
+              duration={type}
+              series={series}
             />
           </div>
         );
@@ -24,5 +25,7 @@ const Cards = ({ songs }) => {
     </Fragment>
   );
 };
-
-export default Cards;
+const mapStateToProps = (state) => ({
+  settings: state.settings,
+});
+export default connect(mapStateToProps, {})(Cards);

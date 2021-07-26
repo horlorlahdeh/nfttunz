@@ -1,18 +1,22 @@
 import React, { Fragment } from 'react'
 import Tag from './Tag'
 import uuid from "uuid";
+import { connect } from 'react-redux';
 
-const Tags = ({tags}) => {
-    return (
-        <Fragment>
-            <div className="tags__wrapper">
-                {tags.map((tag) => {
-                    const id = uuid();
-                    return <Tag key={id} title={tag.title} icon={tag.icon} />;
-                })}
-            </div>
-        </Fragment>
-    )
-}
 
-export default Tags
+const Tags = ({ tags, settings: { categories } }) => {
+  return (
+    <Fragment>
+      <div className="tags__wrapper">
+        {tags.map((tag) => {
+          const id = uuid();
+          return <Tag key={id} title={tag.title} icon={tag.icon} />;
+        })}
+      </div>
+    </Fragment>
+  );
+};
+const mapStateToProps = (state) => ({
+  settings: state.settings,
+});
+export default connect(mapStateToProps, {})(Tags)
