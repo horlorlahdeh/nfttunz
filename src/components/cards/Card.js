@@ -1,13 +1,15 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 
-const Card = ({ thumbnail, title, duration, artiste, genre, series }) => {
+
+const Card = ({ thumbnail, file, title, duration, artiste, genre, series }) => {
   return (
     <Fragment>
+      
       <div className="music__card__wrapper">
         <Link to={`/${series}`}>
           <div className="music__card__title">
-            <h4 className='text-center'>{title}</h4>
+            <h4 className="text-center">{title}</h4>
           </div>
           <div className="music__card__thumbnail">
             <img src={thumbnail} alt="thumbnail" width={100} />

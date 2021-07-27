@@ -43,16 +43,16 @@ input:focus {
   margin: 5px;
 }
 .margin__ten {
-  margin: 10px!important;
+  margin: 10px !important;
 }
 .padding__five {
-  padding: 5px!important
+  padding: 5px !important;
 }
 .padding__ten {
-  padding: 10px!important;
+  padding: 10px !important;
 }
 .small__text {
-  font-size: 8px!important;
+  font-size: 8px !important;
 }
 .nfttunz__loader__wrapper {
   z-index: 999;
@@ -164,6 +164,9 @@ input:focus {
   background-size: cover;
 }
 
+.nfttunz__profile__header__overlay {
+  padding: 50px 0px;
+}
 
 .header__title {
   margin-bottom: 50px;
@@ -172,8 +175,36 @@ input:focus {
 .header__title h1 {
   font-size: 50px;
 }
+.profile__header__title {
+  margin-bottom: 10px;
+}
+.profile__header__title h1 {
+  font-size: 30px;
+  color: #fff;
+  margin: 0px;
+}
+.profile__header__title small a {
+  color: #fff;
+}
+.profile__header__title img {
+  margin-bottom: 20px;
+}
 .header__button {
   margin-top: 50px;
+}
+.profile__header__button {
+  margin-top: 10px;
+}
+.profile__header__button a {
+  background: #5e5e5e;
+  padding: 4px 10px;
+  text-decoration: none;
+  border-radius: 20px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+  border: 0.4px solid transparent;
+  transition: 1s all ease-in;
 }
 .header__button a {
   background: #5e5e5e;
@@ -255,6 +286,8 @@ input:focus {
   margin: 10px 0;
   padding: 10px 0px;
   box-shadow: 0 3px 5px 0 rgb(0 0 0 / 8%);
+  min-height: 270px;
+  max-height: 270px;
 }
 .music__card__title {
   padding: 10px 0px;
@@ -333,9 +366,8 @@ input:focus {
   align-items: center;
 }
 .double__input__row input {
-  
   border: none;
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
   width: 100%;
 }
 .nfttunz__input__border {
@@ -345,7 +377,7 @@ input:focus {
 .nfttunz__file__wrapper {
   border: 1px solid green;
   margin: 5px;
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
   padding: 30px 0px;
   min-height: 166px;
   width: 50%;
@@ -354,7 +386,7 @@ input:focus {
   align-items: center;
 }
 .nfttunz__textarea {
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
   height: 100%;
   padding: 6px 12px;
   resize: none;
@@ -366,7 +398,7 @@ input:focus {
 }
 .nfttunz__select {
   padding: 6px 12px;
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
 }
 .nfttunz__select:focus {
   outline: none;
@@ -404,6 +436,77 @@ input:focus {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.nfttunz__profile__nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0px;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 30px;
+}
+
+.nfttunz__profile__links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.nfttunz__profile__link {
+  padding: 0px 10px;
+  font-weight: bold;
+  font-size: 12px;
+}
+.profile__header__icons a {
+  color: #fff;
+  padding: 0px 5px;
+}
+
+.sub__profile__header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.profile__card {
+  padding: 40px;
+  box-shadow: 0 3px 5px 0 rgb(0 0 0 / 8%);
+}
+.profile__card h4 {
+  font-size: 16px;
+}
+.file__player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 3px 5px 0 rgb(0 0 0 / 8%);
+  width: min-content;
+  padding: 5px;
+  margin: auto;
+}
+.arrow__wrapper {
+  padding: 10px;
+  box-shadow: 0 3px 5px 0 rgb(0 0 0 / 8%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+
+  background-color: #fff;
+}
+.left__ {
+  top: 40%;
+  left: -3.5%;
+}
+.right__ {
+  top: 40%;
+  right: -3.5%;
 }
 .hide__sm {
   display: none;

@@ -6,8 +6,12 @@ import { connect } from "react-redux";
 const Cards = ({ songs, settings: { categories } }) => {
   return (
     <Fragment>
+      <div className="arrow__wrapper left__">
+        <i className="fa fa-chevron-left"></i>
+      </div>
       {songs.map((song) => {
-        const { collection_name, thumbnail, creator, category, type, series } = song;
+        const { collection_name, thumbnail, creator, category, type, series } =
+          song;
         const id = uuid();
         return (
           <div key={id} className="col-md-2 mt-4">
@@ -22,6 +26,9 @@ const Cards = ({ songs, settings: { categories } }) => {
           </div>
         );
       })}
+      <div className="arrow__wrapper right__">
+        <i className="fa fa-chevron-right"></i>
+      </div>
     </Fragment>
   );
 };

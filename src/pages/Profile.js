@@ -1,10 +1,14 @@
 import React, { Fragment } from "react";
 import ProfileHeader from "../components/ProfileHeader";
 import Layout from "../components/Layout";
-import { Switch, Route, Link } from "react-router-dom";
-import Settings from "./profile_routes/Settings";
+import { Switch, Route } from "react-router-dom";
+import Settings from "./sub-routes/Settings";
 import { useEffect } from "react";
-import Collectibles from "./profile_routes/Collectibles";
+import Collectibles from "./sub-routes/Collectibles";
+import Edit from "./sub-routes/Edit";
+import Info from "./sub-routes/Info";
+import Wallet from "./sub-routes/Wallet";
+import ProfileNav from "../components/ProfileNav";
 
 const Profile = ({ match }) => {
   const { path } = match;
@@ -15,19 +19,13 @@ const Profile = ({ match }) => {
     <Fragment>
       <Layout>
         <ProfileHeader />
-        <div className="nfttunz__profile__nav">
-          <ul className="nfttunz__profile__links">
-            <li className="nfttunz__profile__link">
-              <Link to={`${path}/settings`}>Settings</Link>
-            </li>
-            <li className="nfttunz__profile__link">
-              <Link to={`${path}/collectibles`}>Collectibles</Link>
-            </li>
-          </ul>
-        </div>
+        <ProfileNav path={path} />
         <Switch>
           <Route exact path={`${path}/settings`} component={Settings} />
           <Route exact path={`${path}/collectibles`} component={Collectibles} />
+          <Route exact path={`${path}/edit`} component={Edit} />
+          <Route exact path={`${path}/`} component={Info} />
+          <Route exact path={`${path}/wallet`} component={Wallet} />
         </Switch>
       </Layout>
     </Fragment>

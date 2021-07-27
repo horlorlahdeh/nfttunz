@@ -85,7 +85,15 @@ const Navbar = ({ isShowLogIn, isShow, auth, logout }) => {
             </form>
             {auth.authenticated && (
               <div className="nfftunz__avatar__wrapper margin__left">
-                <img src={auth.avatar} alt={auth.username} width={30} />
+                <img
+                  src={
+                    auth.avatar
+                      ? auth.avatar
+                      : "https://nftshowroom.dtools.dev/api/avatar/bait002"
+                  }
+                  alt={auth.username}
+                  width={30}
+                />
               </div>
             )}
             <button
