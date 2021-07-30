@@ -290,7 +290,7 @@ input:focus {
   max-height: 270px;
 }
 .music__card__title {
-  padding: 10px 0px;
+  padding: 10px 10px;
 }
 .music__card__thumbnail {
   text-align: center;
@@ -302,7 +302,7 @@ input:focus {
   object-fit: contain;
 }
 .music__card__title h4 {
-  font-size: 14px;
+  font-size: 11px;
   font-weight: 700;
 }
 .music__card__footer {
@@ -501,11 +501,11 @@ input:focus {
   background-color: #fff;
 }
 .left__ {
-  top: 40%;
+  top: 20%;
   left: -3.5%;
 }
 .right__ {
-  top: 40%;
+  top: 20%;
   right: -3.5%;
 }
 .hide__sm {

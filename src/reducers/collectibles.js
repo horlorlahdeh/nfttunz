@@ -1,4 +1,8 @@
-import { GET_COLLECTIBLES, GET_USER_COLLECTIBLES } from "../actions/types";
+import {
+  GET_COLLECTIBLE,
+  GET_COLLECTIBLES,
+  GET_USER_COLLECTIBLES,
+} from "../actions/types";
 
 const intialState = {
   collectibles: [],
@@ -16,7 +20,12 @@ export const collectiblesReducer = (state = intialState, action) => {
         collectibles: payload,
         loading: false,
       };
-
+    case GET_COLLECTIBLE:
+      return {
+        ...state,
+        collectible: payload,
+        loading: false
+      };
     default:
       return state;
   }
