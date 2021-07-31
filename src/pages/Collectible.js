@@ -6,11 +6,13 @@ import VideoPlayer from "react-video-markers";
 import Slider from "react-slick";
 import { getCollectible, getCollectibles } from "../actions/collectibles";
 import Card from "../components/cards/Card";
+import { sellToken } from "../actions/token";
 
 const Collectible = ({
   match,
   getCollectible,
   getCollectibles,
+  sellToken,
   collectibles: { collectible, collectibles },
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -87,41 +89,56 @@ const Collectible = ({
                   />
                 )}
               </div>
-              <div className="collectible__description mt-3">
-                <p className="text-center">
-                  <strong>Description:</strong> {collectible?.description}
-                </p>
-                <p className="text-center">
-                  <strong>Notes:</strong> {collectible?.notes}
-                </p>
-                <p className="text-center">
-                  <strong>Type:</strong> {collectible?.type}
-                </p>
-                <p className="text-center">
-                  <strong>Tags:</strong>{" "}
-                  {collectible?.tags.map((tag, index) => (
-                    <span key={index}>#{tag} </span>
-                  ))}
-                </p>
-                <p className="text-center">
-                  <strong>Featured:</strong>{" "}
-                  {collectible?.featured === false ? "false" : "true"}
-                </p>
-                <p className="text-center">
-                  <strong>NSFW:</strong>{" "}
-                  {collectible?.nsfw === false ? "false" : "true"}
-                </p>
-                <p className="text-center">
-                  <strong>Published:</strong>{" "}
-                  {collectible?.published === false ? "false" : "true"}
-                </p>
-                <p className="text-center">
-                  <strong>Creator:</strong> {collectible?.creator}
-                </p>
-              </div>
-              <div className="collectible__action__buttons text-center my-3">
-                <button className="text-center">Buy Now</button>
-              </div>
+              {collectibles.length > 0 ? (
+                <Fragment>
+                  <div className="collectible__description mt-3">
+                    <p className="text-center">
+                      <strong>Description:</strong> {collectible?.description}
+                    </p>
+                    <p className="text-center">
+                      <strong>Notes:</strong> {collectible?.notes}
+                    </p>
+                    <p className="text-center">
+                      <strong>Type:</strong> {collectible?.type}
+                    </p>
+                    <p className="text-center">
+                      <strong>Tags:</strong>{" "}
+                      {collectible?.tags?.map((tag, index) => (
+                        <span key={index}>#{tag} </span>
+                      ))}
+                    </p>
+                    <p className="text-center">
+                      <strong>Featured:</strong>{" "}
+                      {collectible?.featured === false ? "false" : "true"}
+                    </p>
+                    <p className="text-center">
+                      <strong>NSFW:</strong>{" "}
+                      {collectible?.nsfw === false ? "false" : "true"}
+                    </p>
+                    <p className="text-center">
+                      <strong>Published:</strong>{" "}
+                      {collectible?.published === false ? "false" : "true"}
+                    </p>
+                    <p className="text-center">
+                      <strong>Creator:</strong> {collectible?.creator}
+                    </p>
+                  </div>
+                  <div className="collectible__action__buttons text-center my-3">
+                    <button
+                      className="text-center"
+                      onClick={() => sellToken(3)}
+                    >
+                      Buy Now
+                    </button>
+                  </div>
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <h4 className="text-center mt-3">
+                    No music here yet... Get creative and make some!
+                  </h4>
+                </Fragment>
+              )}
             </div>
           </div>
           <hr />
@@ -136,8 +153,7 @@ const Collectible = ({
                   genre={collec?.category}
                   duration={collec?.type}
                   series={collec?.series}
-                  carouselClass='mx-1'
-               
+                  carouselClass="mx-1"
                 />
               ))}
             </Slider>
@@ -150,4 +166,8 @@ const Collectible = ({
 const mapStateToProps = (state) => ({
   collectibles: state.collectibles,
 });
-export default connect(mapStateToProps, { getCollectible, getCollectibles })(Collectible);
+export default connect(mapStateToProps, {
+  getCollectible,
+  getCollectibles,
+  sellToken,
+})(Collectible);

@@ -511,6 +511,109 @@ input:focus {
 .hide__sm {
   display: none;
 }
+
+/* Style the input fields */
+.preview__card {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 4px;
+  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%),
+    0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+  transition: 0.5s all ease-in-out;
+  border: 4px solid transparent;
+}
+.preview__card h6 {
+  margin-top: 10px;
+}
+.preview__card a {
+  display: block;
+  margin: auto;
+  margin-top: 10px;
+}
+.steps__input {
+  padding: 10px;
+  width: 100%;
+  font-size: 17px;
+  font-family: Raleway;
+  border: 1px solid #aaaaaa;
+  margin: 4px 0px;
+}
+.step__button__wrapper {
+  margin-top: 15px;
+  text-align: right;
+}
+.step__button__wrapper button {
+  background-color: #491b19;
+  color: #fff;
+  font-size: 14px;
+  padding: 6px 18px;
+  border-radius: 4px;
+  margin-right: 5px;
+  border: none;
+  outline: none;
+}
+.double__input__per__row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.double__input__per__row input:first-child {
+  margin-right: 5px;
+}
+.double__input__per__row select:first-child {
+  margin-right: 5px;
+}
+.add__more__input__button {
+  background-color: transparent;
+  color: #491b19;
+  border: none;
+  outline: none;
+  padding: 8px 14px;
+  font-size: 11px;
+  display: flex;
+  text-decoration: underline;
+}
+.add__more__input__button i {
+  align-self: center;
+  margin-left: 5px;
+}
+.sub__header__with__button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+textarea {
+  resize: none;
+}
+
+input:focus-visible,
+select:focus-visible {
+  box-shadow: none;
+  background-color: #fff;
+  /* border: none; */
+  outline: none;
+}
+.auth__button {
+  width: 100%;
+  background-color: #aa0c0b;
+  color: #fff;
+  font-weight: 700;
+  border: 1px solid #aa0c0b;
+  outline: none;
+  padding: 8px;
+  transition: 0.5s all ease-in-out;
+}
+
+.auth__button:hover {
+  background-color: #fff;
+  color: #aa0c0b;
+}
+
+
+
 /* Medium */
 @media screen and (min-width: 1700px) {
   .nfttunz__navbar__brand {

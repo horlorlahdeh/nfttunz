@@ -1,6 +1,14 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
+import { connect } from "react-redux";
+import { getProfile } from "../../actions/profile";
 
-const Info = () => {
+const Info = ({ getProfile, profiles: { profile, loading }, user }) => {
+  useEffect(() => {
+    getProfile();
+    return () => {
+      console.log("unount info");
+    };
+  }, [getProfile]);
   return (
     <Fragment>
       <div className="container">
@@ -23,7 +31,7 @@ const Info = () => {
                 </div>
                 <div className="col-md-7">
                   <div className="profile__card__value">
-                    <h4>@bait002</h4>
+                    <h4>@{profile?.username}</h4>
                   </div>
                 </div>
               </div>
@@ -36,12 +44,7 @@ const Info = () => {
                 </div>
                 <div className="col-md-7">
                   <div className="profile__card__value">
-                    <h4>
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                      Laudantium nam nulla sequi quidem quod iusto autem
-                      suscipit facere vel omnis libero asperiores cumque
-                      perferendis sed ab ad, repellat illum rerum!
-                    </h4>
+                    <h4>{profile?.bio}</h4>
                     <a href="#!">edit</a>
                   </div>
                 </div>
@@ -55,7 +58,7 @@ const Info = () => {
                 </div>
                 <div className="col-md-7">
                   <div className="profile__card__value">
-                    <h4>No</h4>
+                    <h4>{profile?.whitelisted === false ? "false" : "true"}</h4>
                     <a href="#!">apply</a>
                   </div>
                 </div>
@@ -69,7 +72,9 @@ const Info = () => {
                 </div>
                 <div className="col-md-7">
                   <div className="profile__card__value">
-                    <h4>No</h4>
+                    <h4>
+                      {profile?.whitelistedApplied === false ? "false" : "true"}
+                    </h4>
                     <a href="#!">apply</a>
                   </div>
                 </div>
@@ -78,12 +83,12 @@ const Info = () => {
               <div className="row">
                 <div className="col-md-3">
                   <div className="profile__card__title">
-                    <h4>Banned:</h4>
+                    <h4>Admin:</h4>
                   </div>
                 </div>
                 <div className="col-md-7">
                   <div className="profile__card__value">
-                    <h4>No</h4>
+                    <h4>{profile?.admin === false ? "false" : "true"}</h4>
                   </div>
                 </div>
               </div>
@@ -96,7 +101,11 @@ const Info = () => {
                 </div>
                 <div className="col-md-7">
                   <div className="profile__card__value">
-                    <h4>reazuliqbal, aggroed, nfttunz</h4>
+                    <h4>
+                      {user.following.map((follower) => (
+                        <span className="px-1">@{follower}</span>
+                      ))}
+                    </h4>
                   </div>
                 </div>
               </div>
@@ -121,5 +130,8 @@ const Info = () => {
     </Fragment>
   );
 };
-
-export default Info;
+const mapStateToProps = (state) => ({
+  profiles: state.profiles,
+  user: state.users,
+});
+export default connect(mapStateToProps, { getProfile })(Info);

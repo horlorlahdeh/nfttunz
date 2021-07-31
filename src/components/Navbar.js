@@ -61,8 +61,8 @@ const Navbar = ({ isShowLogIn, isShow, auth, logout }) => {
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link" to="/profile">
-                  Profile
+                <Link className="nav-link" to="/mint">
+                  Mint Tokens
                 </Link>
               </li>
             </ul>
@@ -85,15 +85,17 @@ const Navbar = ({ isShowLogIn, isShow, auth, logout }) => {
             </form>
             {auth.authenticated && (
               <div className="nfftunz__avatar__wrapper margin__left">
-                <img
-                  src={
-                    auth.avatar
-                      ? auth.avatar
-                      : "https://nftshowroom.dtools.dev/api/avatar/bait002"
-                  }
-                  alt={auth.username}
-                  width={30}
-                />
+                <Link to="/profile">
+                  <img
+                    src={
+                      auth.avatar
+                        ? auth.avatar
+                        : "https://nftshowroom.dtools.dev/api/avatar/bait002"
+                    }
+                    alt={auth.username}
+                    width={30}
+                  />
+                </Link>
               </div>
             )}
             <button
