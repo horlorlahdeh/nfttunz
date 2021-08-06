@@ -60,7 +60,7 @@ export const sellToken = (tokenPayload, price, nfts) => async dispatch => {
      );
 
      const data = axios.post("https://hetestnet.dtools.dev/rpc/contracts/");
-      
+      console.log(fee, data)
      const json = {
        contractName: "nftmarket",
        contractAction: "sell",

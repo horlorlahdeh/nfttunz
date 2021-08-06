@@ -41,12 +41,12 @@ const Edit = ({ setProfile }) => {
       },
     };
     console.log(e.target.files[0]);
+    console.log(avatar);
     setAvatar(e.target.files[0]);
     setAvatarName(e.target.files[0].name);
     let prepData = new FormData();
     prepData.append("image", e.target.files[0]);
-    const data = await axios.post("/avatar/upload", prepData, config);
-    console.log(data.data);
+    await axios.post("/avatar/upload", prepData, config);
     setToastNotification("Avatar uploaded", "success");
   };
 

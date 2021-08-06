@@ -6,12 +6,12 @@ import { createToken } from "../actions/token";
 import { setToastNotification, uploadFile } from "../utils/helpers";
 import UploadLoader from "../components/UploadLoader";
 
-const MintToken = ({ createToken, settings: {categories} }) => {
+const MintToken = ({ createToken, settings: { categories } }) => {
   const [formData, setFormData] = useState({
     name: "",
     collectionName: "",
     description: "",
-    rights: 3,
+    rights: 2,
     tags: "",
     editions: 1,
     notes: "Lorem lipsum",
@@ -19,7 +19,7 @@ const MintToken = ({ createToken, settings: {categories} }) => {
   const [agreed, setAgreed] = useState(false);
   const [agreements, setAgreements] = useState([]);
   const [nsfw, setNsfw] = useState(false);
-  const [category, setCategory] = useState('Hip Hop')
+  const [category, setCategory] = useState("Hip Hop");
   const [thumbnail, setThumbnail] = useState("");
   const [thumbnailName, setThumbnailName] = useState("");
   const [nftFile, setNftFile] = useState("");
@@ -65,16 +65,16 @@ const MintToken = ({ createToken, settings: {categories} }) => {
     setThumbnailName(e.target.files[0].name);
     setProgress(uploadData.progress);
     setLoading(false);
-    setToastNotification('Thumbnail Uploaded successful', 'green')
+    setToastNotification("Thumbnail Uploaded successful", "green");
   };
   const handleFileUpload = async (e) => {
     setFileLoading(true);
     const thumbn = e.target.files[0];
     const uploadData = await uploadFile(thumbn, "file");
-    if(!uploadData) {
-      setToastNotification('Unsurported file type', 'error');
-      setFileLoading(false)
-      return 
+    if (!uploadData) {
+      setToastNotification("Unsurported file type", "error");
+      setFileLoading(false);
+      return;
     }
     setNftFile(uploadData.data?.url);
     setFileName(e.target.files[0].name);
@@ -88,9 +88,9 @@ const MintToken = ({ createToken, settings: {categories} }) => {
       alert("You must agree to all eight terms");
       return;
     }
-    if(!agreed) {
-      alert('You must agree to all the terms')
-      return
+    if (!agreed) {
+      alert("You must agree to all the terms");
+      return;
     }
     const payload = {
       action: "mint",
@@ -107,7 +107,7 @@ const MintToken = ({ createToken, settings: {categories} }) => {
       tags: tags.split(" "),
       description: description,
     };
-    console.log(payload)
+    console.log(payload);
     // Do something keychain to broadcast transactions
     createToken(payload);
   };
@@ -144,15 +144,16 @@ const MintToken = ({ createToken, settings: {categories} }) => {
                           id="contentCategory"
                           onChange={onChange}
                         >
-                          <option value={contentCategory} className='text-center'>
+                          <option
+                            value={contentCategory}
+                            className="text-center"
+                          >
                             Select Content Type
                           </option>
                           <option value="audio">Audio</option>
                           <option value="video">Video</option>
-                         
                         </select>
                       </div>
-                      
                     </div>
                     <div className="double__input__row">
                       <div className="nfttunz__input__wrapper nfttunz__input__border w-50">
@@ -256,12 +257,12 @@ const MintToken = ({ createToken, settings: {categories} }) => {
                           id="rights"
                           onChange={onChange}
                         >
-                          <option value='Select rights' disabled>
+                          <option value="Select rights" disabled>
                             Select rights
                           </option>
                           <option value="1">Private</option>
-                          <option value="2">Limited</option>
-                          <option value="3">Public</option>
+
+                          <option value="2">Public</option>
                         </select>
                       </div>
                       <div className="nfttunz__input__wrapper nfttunz__input__border w-50">

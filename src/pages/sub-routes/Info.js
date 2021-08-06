@@ -102,9 +102,9 @@ const Info = ({ getProfile, profiles: { profile, loading }, user }) => {
                 <div className="col-md-7">
                   <div className="profile__card__value">
                     <h4>
-                      {user.following.map((follower) => (
-                        <span className="px-1">@{follower}</span>
-                      ))}
+                      {user?.following?.length > 0 ? (user?.following?.map((follower, index) => (
+                        <span key={index} className="px-1">@{follower}</span>
+                      ))) : <span>Not following anyone yet...</span>}
                     </h4>
                   </div>
                 </div>

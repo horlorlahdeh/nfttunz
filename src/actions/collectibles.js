@@ -34,7 +34,6 @@ export const getUserCollectibles = () => async (dispatch) => {
 export const getCollectible = (series) => async dispatch => {
   try {
     const data = await axios.get(`/collectibles/info?series=${series}`)
-    console.log(data.data)
     dispatch({
       type: GET_COLLECTIBLE,
       payload: data.data

@@ -7,13 +7,25 @@ import Slider from "react-slick";
 import { getCollectible, getCollectibles } from "../actions/collectibles";
 import Card from "../components/cards/Card";
 import { sellToken } from "../actions/token";
+import {
+  getNFTInstances,
+  getNFTInstance,
+  getNFTDefinition,
+} from "../actions/nfts";
+import UploadLoader from "../components/UploadLoader";
 
+let mounted = false;
 const Collectible = ({
   match,
   getCollectible,
   getCollectibles,
+  getNFTDefinition,
+  getNFTInstances,
+  getNFTInstance,
   sellToken,
   collectibles: { collectible, collectibles },
+  username,
+  nfts: { instances, loading },
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.7);
@@ -22,7 +34,14 @@ const Collectible = ({
     infinite: true,
     speed: 500,
     slidesToShow: 6,
-    slidesToScroll: 3,
+    slidesToScroll: 1,
+  };
+  const handleProgress = (e) => {
+    console.log("Current time: ", e.target.currentTime);
+  };
+
+  const handleDuration = (duration) => {
+    console.log("Duration: ", duration);
   };
   const handlePlay = () => {
     setIsPlaying(true);
@@ -37,9 +56,28 @@ const Collectible = ({
     params: { series },
   } = match;
   useEffect(() => {
+    mounted = true;
     getCollectible(series);
     getCollectibles();
-  }, [series, getCollectible, getCollectibles]);
+    getNFTDefinition();
+    getNFTInstances(
+      {
+        account: username,
+      },
+      series
+    );
+    getNFTInstance(4);
+    return () => (mounted = false);
+  }, [
+    series,
+    username,
+    getCollectible,
+    getCollectibles,
+    getNFTDefinition,
+    getNFTInstances,
+    getNFTInstance,
+  ]);
+
   return (
     <Fragment>
       <Layout>
@@ -78,15 +116,18 @@ const Collectible = ({
                     />
                   </div>
                 ) : (
-                  <VideoPlayer
-                    url={collectible?.file}
-                    isPlaying={isPlaying}
-                    volume={volume}
-                    onPlay={handlePlay}
-                    onPause={handlePause}
-                    onVolume={handleVolume}
-                    // loop={true}
-                  />
+                  mounted && (
+                    <VideoPlayer
+                      url={collectible?.file}
+                      isPlaying={isPlaying}
+                      volume={volume}
+                      onPlay={handlePlay}
+                      onPause={handlePause}
+                      onVolume={handleVolume}
+                      onProgress={handleProgress}
+                      onDuration={handleDuration}
+                    />
+                  )
                 )}
               </div>
               {collectibles.length > 0 ? (
@@ -124,12 +165,53 @@ const Collectible = ({
                     </p>
                   </div>
                   <div className="collectible__action__buttons text-center my-3">
-                    <button
-                      className="text-center"
-                      onClick={() => sellToken(3)}
-                    >
-                      Buy Now
-                    </button>
+                    <table className="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">Series</th>
+                          <th scope="col">Creator</th>
+                          <th scope="col">Rights</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {instances?.map((instance) => {
+                          if (loading === true)
+                            return (
+                              <div className="text-center">
+                                <UploadLoader />
+                              </div>
+                            );
+                          return (
+                            <tr key={instance?._id}>
+                              <th scope="row">{instance?._id}</th>
+                              <td>
+                                {instance?.properties.series
+                                  .replace(/_/g, " ")
+                                  .replace(/-/g, " ")
+                                  .toUpperCase()}
+                              </td>
+                              <td>{instance?.account}</td>
+                              <td>
+                                {JSON.parse(instance.properties.metadata)
+                                  .rights === 1
+                                  ? "Private"
+                                  : "Public"}
+                              </td>
+                              <td>
+                                {instance.account === username ? (
+                                  <button>Sell</button>
+                                ) : (
+                                  <button>Buy</button>
+                                )}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                    <ul></ul>
                   </div>
                 </Fragment>
               ) : (
@@ -146,6 +228,7 @@ const Collectible = ({
             <Slider {...settings}>
               {collectibles.map((collec, index) => (
                 <Card
+                  key={index}
                   title={collec?.collection_name}
                   thumbnail={collec?.thumbnail}
                   file={collec?.file}
@@ -165,9 +248,14 @@ const Collectible = ({
 };
 const mapStateToProps = (state) => ({
   collectibles: state.collectibles,
+  nfts: state.nfts,
+  username: state.users.username,
 });
 export default connect(mapStateToProps, {
   getCollectible,
   getCollectibles,
   sellToken,
+  getNFTDefinition,
+  getNFTInstances,
+  getNFTInstance,
 })(Collectible);
