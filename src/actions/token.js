@@ -1,7 +1,6 @@
 import { MINT_TOKEN } from "./types";
 import store from "../store";
 import { setToastNotification, toFixedWithoutRounding } from "../utils/helpers";
-import axios from '../utils/axios'
 
 
 export const createToken = (tokenPayload) => async (dispatch) => {
@@ -49,8 +48,10 @@ export const createToken = (tokenPayload) => async (dispatch) => {
   });
 };
 
-export const sellToken = (tokenPayload, price, nfts) => async dispatch => {
+export const sellToken = (tokenPayload, price, nft) => async dispatch => {
   try {
+    const nfts =[]
+    nfts.push(nft.toString());
      const settings = await store.getState().settings;
      const username = await store.getState().users.username;
      const fee = toFixedWithoutRounding(
@@ -58,14 +59,11 @@ export const sellToken = (tokenPayload, price, nfts) => async dispatch => {
          settings.token_issuance_fee * tokenPayload.editions,
        3
      );
-
-     const data = axios.post("https://hetestnet.dtools.dev/rpc/contracts/");
-      console.log(fee, data)
      const json = {
        contractName: "nftmarket",
        contractAction: "sell",
        contractPayload: {
-         pricSsymbol: settings.currency,
+         priceSymbol: settings.currency,
          symbol: settings.nft_symbol,
          nfts,
          price: price.toString(),

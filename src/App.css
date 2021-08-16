@@ -612,6 +612,40 @@ select:focus-visible {
   color: #aa0c0b;
 }
 
+.nfttunz__search__wrapper {
+  background-color: #eee;
+  display: flex;
+  border-radius: 25px;
+  width: 50%;
+  margin: 40px auto 20px;
+  padding: 10px;
+}
+.nfttunz__search__wrapper input {
+  background-color: transparent;
+  border: none;
+}
+
+.nfttunz__search__main__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nfttunz__search__wrapper button {
+  border: none;
+  outline: none;
+  color: #eee;
+}
+.nfttunz__search__wrapper button:hover {
+  background: transparent;
+}
+.nfttunz__search__wrapper button:focus {
+  box-shadow: transparent;
+}
+.nfttunz__search__wrapper button i {
+  color: rgb(189, 184, 184);
+}
+
 
 
 /* Medium */

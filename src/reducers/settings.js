@@ -3,7 +3,8 @@ import { SET_SETTINGS } from "../actions/types";
 const intialState = {
   prefix: "",
   account: "",
-  categories: "",
+  categories: [],
+  filters: [],
   currency: "",
   nft_symbol: "TUNES",
   nodes: [],

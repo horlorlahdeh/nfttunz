@@ -1,9 +1,10 @@
 import axios from "axios";
 import store from "../store";
-import { GET_BALANCES, GET_NFT_DEFINITION, GET_NFT_INSTANCES } from "./types";
-const settings = async () => await store.getState().settings;
+import { GET_BALANCES, GET_NFT_DEFINITION, GET_NFT_INSTANCES, GET_NFT_SELLBOOK } from "./types";
+
+// Chain Configuration
 const sidechain_rpc = "https://hetestnet.dtools.dev/rpc/";
-const symbol = "TUNES";
+const symbol = "TUNEZ";
 
 const call = async (endpoint, request) => {
   const postData = {
@@ -74,7 +75,6 @@ export const getNFTDefinition =
       type: GET_NFT_DEFINITION,
       payload: data,
     });
-    console.log('definitions', data);
     return data;
   };
 
@@ -103,7 +103,6 @@ export const getNFTInstances =
     };
     const data = await contract(request);
     const filteredData = data.filter(d => d.properties.series === series)
-    console.log("instances", filteredData, series);
     dispatch({
       type: GET_NFT_INSTANCES,
       payload: filteredData,
@@ -124,24 +123,32 @@ export const getNFTInstance = (id) => async (dispatch) => {
   };
 
   const data = await contract(request);
-  console.log('An instance', data);
+  return data;
 };
 
-export const getNFTSellBook = (query, offset = 0, limit = 1000) => {
-  const symbol = query.symbol || store.getState().settings.nft_symbol;
+export const getNFTSellBook = (query, offset = 0, limit = 1000) => async dispatch => {
+  try {
+    const symbol = query.symbol || store.getState().settings.nft_symbol;
 
-  const request = {
-    method: "find",
-    params: {
-      contract: "nftmarket",
-      table: `${symbol}sellBook`,
-      query,
-      offset,
-      limit,
-    },
-  };
-
-  return contract(request);
+    const request = {
+      method: "find",
+      params: {
+        contract: "nftmarket",
+        table: `${symbol}sellBook`,
+        query,
+        offset,
+        limit,
+      },
+    };
+    const data = await contract(request);
+    console.log(data);
+    dispatch({
+      type: GET_NFT_SELLBOOK,
+      payload: data
+    })
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 export const getNFTInterests = (query = {}, offset = 0, limit = 1000) => {

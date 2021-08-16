@@ -11,6 +11,7 @@ import {
   getNFTInstances,
   getNFTInstance,
   getNFTDefinition,
+  getNFTSellBook,
 } from "../actions/nfts";
 import UploadLoader from "../components/UploadLoader";
 
@@ -22,10 +23,11 @@ const Collectible = ({
   getNFTDefinition,
   getNFTInstances,
   getNFTInstance,
+  getNFTSellBook,
   sellToken,
   collectibles: { collectible, collectibles },
   username,
-  nfts: { instances, loading },
+  nfts: { instances, loading, sellbook },
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.7);
@@ -66,6 +68,9 @@ const Collectible = ({
       },
       series
     );
+    getNFTSellBook({
+      account: username,
+    });
     getNFTInstance(4);
     return () => (mounted = false);
   }, [
@@ -76,6 +81,7 @@ const Collectible = ({
     getNFTDefinition,
     getNFTInstances,
     getNFTInstance,
+    getNFTSellBook
   ]);
 
   return (
@@ -201,7 +207,13 @@ const Collectible = ({
                               </td>
                               <td>
                                 {instance.account === username ? (
-                                  <button>Sell</button>
+                                  <button
+                                    onClick={() =>
+                                      sellToken(instance, 12, instance._id)
+                                    }
+                                  >
+                                    Sell
+                                  </button>
                                 ) : (
                                   <button>Buy</button>
                                 )}
@@ -258,4 +270,5 @@ export default connect(mapStateToProps, {
   getNFTDefinition,
   getNFTInstances,
   getNFTInstance,
+  getNFTSellBook,
 })(Collectible);
