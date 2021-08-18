@@ -1,7 +1,7 @@
 import "./App.css";
 import Home from "./pages/Home";
 import Activity from "./pages/Activity";
-import Gallery from "./pages/Gallery";
+import Market from "./pages/Market";
 import Profile from "./pages/Profile";
 import Collectible from "./pages/Collectible";
 import MintToken from "./pages/MintToken";
@@ -38,7 +38,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/activity" component={Activity} />
-            <Route exact path="/gallery" component={Gallery} />
+            <Route exact path="/market" component={Market} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute exact path="/collectible/:series" component={Collectible} />
             <PrivateRoute exact path="/mint" component={MintToken} />

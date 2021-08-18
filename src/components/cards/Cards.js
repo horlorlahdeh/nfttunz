@@ -8,7 +8,7 @@ const Cards = ({ songs, settings: { categories }, showPlayer, handleShowPlayer, 
     <Fragment>
      
       {songs.map((song) => {
-        const { collection_name, thumbnail, file, creator, category, type, series } =
+        const { collection_name, thumbnail, file, creator, category, type, series, price, symbol } =
           song;
         const id = uuid();
         
@@ -26,6 +26,8 @@ const Cards = ({ songs, settings: { categories }, showPlayer, handleShowPlayer, 
               handleShowPlayer={handleShowPlayer}
               setFile={setFile}
               setThumbnail={setThumbnail}
+              price={price}
+              symbol={symbol}
             />
           </div>
         );

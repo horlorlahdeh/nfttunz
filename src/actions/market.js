@@ -1,4 +1,4 @@
-import { GET_MARKET_LISTED } from "./types";
+import { GET_MARKET } from "./types";
 import axios from '../utils/axios'
 
 export const getMarketListed = (params) => async dispatch => {
@@ -8,4 +8,16 @@ export const getMarketListed = (params) => async dispatch => {
  } catch (err) {
      console.log(err.message)
  }
+}
+export const getMarket = (params) => async dispatch => {
+    try {
+        const data = await axios.get(`market`)
+        console.log(data.data);
+        dispatch({
+            type: GET_MARKET,
+            payload: data.data
+        })
+    } catch (err) {
+        console.log(err.message)
+    }
 }

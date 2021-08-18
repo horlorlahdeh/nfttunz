@@ -102,7 +102,9 @@ export const getNFTInstances =
       },
     };
     const data = await contract(request);
+    console.log(data)
     const filteredData = data.filter(d => d.properties.series === series)
+    console.log(filteredData);
     dispatch({
       type: GET_NFT_INSTANCES,
       payload: filteredData,
@@ -141,7 +143,6 @@ export const getNFTSellBook = (query, offset = 0, limit = 1000) => async dispatc
       },
     };
     const data = await contract(request);
-    console.log(data);
     dispatch({
       type: GET_NFT_SELLBOOK,
       payload: data

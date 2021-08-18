@@ -2,22 +2,26 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 // import { getMarketListed } from '../actions/market';
 import { getCollectibles } from '../actions/collectibles';
+import { getMarket } from '../actions/market';
 import Cards from '../components/cards/Cards';
-import Header from '../components/Header';
+// import Header from '../components/Header';
 import Layout from '../components/Layout';
 import Tags from '../components/Tags';
 // import { songs, tags } from '../utils/constants';
 
-const Gallery = ({
+const Market = ({
   getCollectibles,
+  getMarket,
   collectibles,
   settings: { filters },
+  market: { market, loading },
 }) => {
   const [search, setSearch] = useState('');
   useEffect(() => {
     getCollectibles();
+    getMarket();
     return () => {};
-  }, [getCollectibles]);
+  }, [getCollectibles, getMarket]);
   return (
     <Fragment>
       <Layout>
@@ -53,7 +57,7 @@ const Gallery = ({
               </div>
             </div>
             <div className='row'>
-              <Cards songs={collectibles} />
+              <Cards songs={market} />
             </div>
           </div>
         </section>
@@ -63,6 +67,7 @@ const Gallery = ({
 };
 const mapStateToProps = (state) => ({
   collectibles: state.collectibles.collectibles,
+  market: state.market,
   settings: state.settings,
 });
-export default connect(mapStateToProps, { getCollectibles })(Gallery);
+export default connect(mapStateToProps, { getCollectibles, getMarket })(Market);

@@ -27,7 +27,7 @@ const Collectible = ({
   sellToken,
   collectibles: { collectible, collectibles },
   username,
-  nfts: { instances, loading, sellbook },
+  nfts: { instances, loading },
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.7);
@@ -57,14 +57,17 @@ const Collectible = ({
   const {
     params: { series },
   } = match;
+  const authorEnd = series.indexOf('_')
+  const author = series.substring(0, authorEnd)
   useEffect(() => {
+    console.log(author)
     mounted = true;
     getCollectible(series);
     getCollectibles();
     getNFTDefinition();
     getNFTInstances(
       {
-        account: username,
+        account: author,
       },
       series
     );
@@ -81,7 +84,7 @@ const Collectible = ({
     getNFTDefinition,
     getNFTInstances,
     getNFTInstance,
-    getNFTSellBook
+    getNFTSellBook, author
   ]);
 
   return (
@@ -185,16 +188,16 @@ const Collectible = ({
                         {instances?.map((instance) => {
                           if (loading === true)
                             return (
-                              <div className="text-center">
+                              <tr className="text-center">
                                 <UploadLoader />
-                              </div>
+                              </tr>
                             );
                           return (
                             <tr key={instance?._id}>
                               <th scope="row">{instance?._id}</th>
                               <td>
                                 {instance?.properties.series
-                                  .replace(/_/g, " ")
+                                  .replace(/_/g, "'s ~ ")
                                   .replace(/-/g, " ")
                                   .toUpperCase()}
                               </td>

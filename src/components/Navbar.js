@@ -55,8 +55,8 @@ const Navbar = ({ isShowLogIn, isShow, auth, logout }) => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/gallery">
-                  Gallery
+                <Link className="nav-link" to="/market">
+                  Market
                 </Link>
               </li>
 

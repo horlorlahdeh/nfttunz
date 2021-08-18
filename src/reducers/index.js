@@ -5,6 +5,7 @@ import token from "./token";
 import collectibles from "./collectibles";
 import profiles from "./profile";
 import nfts from "./nfts";
+import market from './market'
 
 export default combineReducers({
   users,
@@ -13,4 +14,5 @@ export default combineReducers({
   collectibles,
   profiles,
   nfts,
+  market
 });

@@ -13,7 +13,7 @@ const Card = ({
   handleShowPlayer,
   setFile,
   setThumbnail,
-  carouselClass,
+  carouselClass, price, symbol
 }) => {
   const handleNowPlaying = () => {
     setFile(file);
@@ -23,32 +23,37 @@ const Card = ({
   return (
     <Fragment>
       <div
-        className={`music__card__wrapper ${carouselClass ? carouselClass : ""}`}
+        className={`music__card__wrapper ${carouselClass ? carouselClass : ''}`}
       >
         {/* <Link to={`/${series}`}> */}
-        <div className="music__card__title">
-          <h4 className="text-center">{title}</h4>
+        <div className='music__card__title'>
+          <h4 className='text-center'>{title}</h4>
         </div>
-        <div className="music__card__thumbnail">
-          <img src={thumbnail} alt="thumbnail" width={100} />
+        <div className='music__card__thumbnail'>
+          <img src={thumbnail} alt='thumbnail' width={100} />
         </div>
-        <div className="play__button">
+        {price && (
+          <div className='price__wrapper'>
+            <h6>{price} {symbol}</h6>
+          </div>
+        )}
+        <div className='play__button'>
           <button onClick={() => handleNowPlaying()}>Play now</button>
           <Link
-            style={{ color: "lightgray", fontSize: "11px", marginLeft: "4px" }}
+            style={{ color: 'lightgray', fontSize: '11px', marginLeft: '4px' }}
             to={`/collectible/${series}`}
           >
             view
           </Link>
         </div>
-        <div className="music__card__footer">
-          <div className="music__card__artiste">
+        <div className='music__card__footer'>
+          <div className='music__card__artiste'>
             <small>Artiste:</small>
             <h6>{artiste}</h6>
           </div>
-          <div className="music__card__extras">
+          <div className='music__card__extras'>
             <h6>
-              <i className="fa fa-clock"></i>
+              <i className='fa fa-clock'></i>
               {duration}
             </h6>
             <h6>
