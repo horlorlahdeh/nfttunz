@@ -103,8 +103,8 @@ export const getNFTInstances =
     };
     const data = await contract(request);
     console.log(data)
-    const filteredData = data.filter(d => d.properties.series === series)
-    console.log(filteredData);
+    const filteredData = await data.filter(d => d.properties.series === series)
+    console.log('filtered data', filteredData);
     dispatch({
       type: GET_NFT_INSTANCES,
       payload: filteredData,

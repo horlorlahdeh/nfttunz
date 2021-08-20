@@ -19,3 +19,5 @@ export const GET_MARKET = 'GET_MARKET';
 export const SET_MORE_INTERESTS = 'SET_MORE_INTERESTS';
 export const SET_INTERESTS = 'SET_INTERESTS';
 export const SET_PAGINATION = 'SET_PAGINATION';
+export const SET_ON_MARKET = 'SET_ON_MARKET';
+export const SET_SERIES = 'SET_SERIES';

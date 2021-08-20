@@ -3,6 +3,7 @@ import {
   SET_INTERESTS,
   SET_MORE_INTERESTS,
   SET_PAGINATION,
+  SET_ON_MARKET,
 } from '../actions/types';
 
 const initialState = {
@@ -30,6 +31,7 @@ export const marketReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case GET_MARKET:
+    case SET_ON_MARKET:
       return {
         ...state,
         market: payload,

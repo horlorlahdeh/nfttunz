@@ -13,7 +13,7 @@ const LoginModal = ({
 
   return (
     <div
-      className={`${showHideClassName} modal`}
+      className={`${showHideClassName}`}
       id="exampleModal"
       tabIndex="-1"
       aria-labelledby="exampleModalLabel"

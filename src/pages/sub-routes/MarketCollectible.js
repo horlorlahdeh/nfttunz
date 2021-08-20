@@ -6,11 +6,17 @@ import VideoPlayer from 'react-video-markers';
 import Slider from 'react-slick';
 import {
   fetchInterests,
+  fetchOnMarket,
   getCollectible,
   getCollectibles,
 } from '../../actions/collectibles';
 import Card from '../../components/cards/Card';
-import { sellToken, buyToken } from '../../actions/token';
+import {
+  sellToken,
+  buyToken,
+  changePrice,
+  cancelSell,
+} from '../../actions/token';
 import {
   getNFTInstances,
   getNFTInstance,
@@ -19,6 +25,8 @@ import {
 } from '../../actions/nfts';
 import UploadLoader from '../../components/UploadLoader';
 import { Link } from 'react-router-dom';
+import ManageModal from '../../components/modals/ManageModal';
+import SetPriceModal from '../../components/modals/SetPriceModal';
 
 let mounted = false;
 const MarketCollectible = ({
@@ -30,12 +38,19 @@ const MarketCollectible = ({
   getNFTInstance,
   getNFTSellBook,
   fetchInterests,
+  fetchOnMarket,
   sellToken,
   buyToken,
+  changePrice,
+  cancelSell,
   collectibles: { collectible, collectibles },
   username,
   nfts: { instances, sellbook, loading },
 }) => {
+  const [isShowPrice, setIsShowPrice] = useState(false);
+  const [isShowManage, setIsShowManage] = useState(false);
+  const [price, setPrice] = useState('');
+  const [instanceToSell, setInstanceToSell] = useState({});
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.7);
   const settings = {
@@ -68,6 +83,7 @@ const MarketCollectible = ({
   const author = series.substring(0, authorEnd);
   useEffect(() => {
     mounted = true;
+    console.log(author);
     getCollectible(series);
     getCollectibles();
     getNFTDefinition();
@@ -81,6 +97,9 @@ const MarketCollectible = ({
       account: author,
     });
     fetchInterests();
+    fetchOnMarket({
+      account: author,
+    });
     // getNFTInstance(4);
     return () => (mounted = false);
   }, [
@@ -93,6 +112,7 @@ const MarketCollectible = ({
     getNFTInstance,
     getNFTSellBook,
     fetchInterests,
+    fetchOnMarket,
     author,
   ]);
 
@@ -104,7 +124,8 @@ const MarketCollectible = ({
             <div className='col-md-12'>
               <div className='panel bg-black bg-light panel-success p-2'>
                 <h6 className='text-center mt-3'>
-                  Kindly modify this collection and manage it in{' '}
+                  <i className='fa fa-info-circle'></i> Kindly modify this
+                  collection and manage it in{' '}
                   <Link to='/'>
                     <strong>Manage Collection</strong>
                   </Link>
@@ -235,19 +256,47 @@ const MarketCollectible = ({
                                   </td>
                                   <td>
                                     {instance.account === username ? (
-                                      <button
-                                        onClick={() =>
-                                          sellToken(instance, 12, instance._id)
-                                        }
-                                      >
-                                        Manage
-                                      </button>
+                                      <div className='flex'>
+                                        <button
+                                          className='btn btn-success btn-sm m-1'
+                                          onClick={() => {
+                                            setInstanceToSell(instance);
+                                            setIsShowPrice(true);
+                                            // sellToken(
+                                            //   instance,
+                                            //   12,
+                                            //   instance.nft_id
+                                            // );
+                                          }}
+                                        >
+                                          <i className='fa fa-cogs'></i>
+                                        </button>
+                                        <button
+                                          type='button'
+                                          className='btn btn-info btn-sm m-1'
+                                          onClick={() => {
+                                            setInstanceToSell(instance);
+                                            setIsShowManage(true);
+                                          }}
+                                        >
+                                          <i className='fa fa-pencil-alt'></i>
+                                        </button>
+                                        <button
+                                          type='button'
+                                          className='btn btn-danger btn-sm m-1'
+                                          onClick={() => {
+                                            cancelSell(instance.nft_id)
+                                          }}
+                                        >
+                                          <i className='fa fa-times'></i>
+                                        </button>
+                                      </div>
                                     ) : (
                                       <button
                                         onClick={() =>
                                           buyToken(
                                             instance,
-                                            12,
+                                            instance.price,
                                             instance.nft_id
                                           )
                                         }
@@ -293,6 +342,20 @@ const MarketCollectible = ({
             </Slider>
           </div>
         </div>
+        <ManageModal
+          isShow={isShowManage}
+          setIsShow={setIsShowManage}
+          changePrice={changePrice}
+          instance={instanceToSell}
+        />
+        <SetPriceModal
+          isShow={isShowPrice}
+          setIsShow={setIsShowPrice}
+          setPrice={setPrice}
+          price={price}
+          instance={instanceToSell}
+          sellToken={sellToken}
+        />
       </Layout>
     </Fragment>
   );
@@ -307,9 +370,12 @@ export default connect(mapStateToProps, {
   getCollectibles,
   sellToken,
   buyToken,
+  changePrice,
+  cancelSell,
   getNFTDefinition,
   getNFTInstances,
   getNFTInstance,
   getNFTSellBook,
   fetchInterests,
+  fetchOnMarket,
 })(MarketCollectible);

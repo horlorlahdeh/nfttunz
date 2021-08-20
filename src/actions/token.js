@@ -141,3 +141,82 @@ export const buyToken = (tokenPayload, price, nft) => async dispatch => {
     console.log(err.message)
   }
 }
+
+export const changePrice = (tokenPayload, price, nft) => async (dispatch) => {
+  try {
+    const nfts = [];
+    nfts.push(nft.toString());
+    const settings = await store.getState().settings;
+    const username = await store.getState().users.username;
+    const json = {
+      contractName: 'nftmarket',
+      contractAction: 'changePrice',
+      contractPayload: {
+        symbol: settings.nft_symbol,
+        nfts,
+        price: price.toString(),
+      },
+    };
+    const jsonData = {
+      id: settings.sidechain_id,
+      key: 'Active',
+      data: json,
+      message: 'Change Price NFT',
+      eventName: 'nft-change-price-successful',
+    };
+    window.hive_keychain.requestCustomJson(
+      username,
+      jsonData.id,
+      jsonData.key,
+      JSON.stringify(jsonData.data),
+      jsonData.message,
+      (r) => {
+        if (r.success) {
+          console.log(r);
+          setToastNotification(r.message, 'success');
+        }
+      }
+    );
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+export const cancelSell = ( nft) => async (dispatch) => {
+  try {
+    const nfts = [];
+    nfts.push(nft.toString());
+    const settings = await store.getState().settings;
+    const username = await store.getState().users.username;
+    const json = {
+      contractName: 'nftmarket',
+      contractAction: 'cancel',
+      contractPayload: {
+        symbol: settings.nft_symbol,
+        nfts
+      },
+    };
+    const jsonData = {
+      id: settings.sidechain_id,
+      key: 'Active',
+      data: json,
+      message: 'Change Price NFT',
+      eventName: 'nft-change-price-successful',
+    };
+    window.hive_keychain.requestCustomJson(
+      username,
+      jsonData.id,
+      jsonData.key,
+      JSON.stringify(jsonData.data),
+      jsonData.message,
+      (r) => {
+        if (r.success) {
+          console.log(r);
+          setToastNotification(r.message, 'success');
+        }
+      }
+    );
+  } catch (err) {
+    console.log(err.message);
+  }
+};

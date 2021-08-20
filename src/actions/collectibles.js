@@ -5,10 +5,37 @@ import {
   SET_MORE_INTERESTS,
   SET_INTERESTS,
   SET_PAGINATION,
+  SET_ON_MARKET,
+  SET_SERIES,
 } from './types';
 import axios from '../utils/axios';
 import store from '../store';
 import { arrayChunk } from '../utils/helpers';
+
+// Chain Configuration
+const sidechain_rpc = 'https://hetestnet.dtools.dev/rpc/';
+const symbol = 'TUNEZ';
+
+const call = async (endpoint, request) => {
+  const postData = {
+    jsonrpc: '2.0',
+    id: Date.now(),
+    ...request,
+  };
+  let result = null;
+  const query = await axios.post(`${sidechain_rpc}/${endpoint}`, postData, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    },
+  });
+
+  result = query.data.result;
+
+  return result;
+};
+
+const contract = async (request) => await call('contracts', request);
 
 export const getCollectibles = () => async (dispatch) => {
   try {
@@ -59,7 +86,7 @@ export const fetchSeries = (seriesNames) => async (dispatch) => {
 
     for (let i = 0; i < chunks.length; i += 1) {
       promises.push(
-        axios.$post('collectibles/info', { series: chunks[i].toString() })
+        axios.post('collectibles/info', { series: chunks[i].toString() })
       );
     }
 
@@ -70,8 +97,46 @@ export const fetchSeries = (seriesNames) => async (dispatch) => {
     });
   }
 
-  console.log(seriesData);
+  dispatch({
+    type: SET_SERIES,
+    payload: seriesData.data,
+  });
 };
+
+export const fetchOnMarket =
+  (query, offset = 0, limit = 1000) =>
+  async (dispatch) => {
+    try {
+      const request = {
+        method: 'find',
+        params: {
+          contract: 'nftmarket',
+          table: `${symbol}sellBook`,
+          query,
+          offset,
+          limit,
+        },
+      };
+      let market = await contract(request);
+
+      market = market.map((c) => ({
+        account: c.account,
+        nft_id: Number(c.nftId),
+        series: c.grouping.series,
+        price: Number(c.price),
+        symbol: c.priceSymbol,
+        fee: c.fee,
+      }));
+      console.log('fetchOnMarket', market);
+      dispatch({ type: SET_ON_MARKET, payload: market });
+
+      const seriesNames = Array.from(new Set(market.map((c) => c.series)));
+      console.log(seriesNames);
+      await dispatch(fetchSeries(seriesNames));
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
 
 export const fetchInterests =
   (infinity = false) =>
