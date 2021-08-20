@@ -4,9 +4,14 @@ import Layout from '../components/Layout';
 import AudioPlayer from 'react-h5-audio-player';
 import VideoPlayer from 'react-video-markers';
 import Slider from 'react-slick';
-import { getCollectible, getCollectibles } from '../actions/collectibles';
+import {
+  getCollectible,
+  getCollectibles,
+  fetchInterests,
+  fetchOnMarket,
+} from '../actions/collectibles';
 import Card from '../components/cards/Card';
-import { sellToken, buyToken } from '../actions/token';
+import { sellToken, buyToken, changePrice, cancelSell } from '../actions/token';
 import {
   getNFTInstances,
   getNFTInstance,
@@ -14,6 +19,9 @@ import {
   getNFTSellBook,
 } from '../actions/nfts';
 import UploadLoader from '../components/UploadLoader';
+import { Link } from 'react-router-dom';
+import ManageModal from '../components/modals/ManageModal';
+import SetPriceModal from '../components/modals/SetPriceModal';
 
 let mounted = false;
 const Collectible = ({
@@ -24,12 +32,20 @@ const Collectible = ({
   getNFTInstances,
   getNFTInstance,
   getNFTSellBook,
+  fetchInterests,
+  fetchOnMarket,
   sellToken,
   buyToken,
+  changePrice,
+  cancelSell,
   collectibles: { collectible, collectibles },
   username,
   nfts: { instances, sellbook, loading },
 }) => {
+  const [isShowPrice, setIsShowPrice] = useState(false);
+  const [isShowManage, setIsShowManage] = useState(false);
+  const [price, setPrice] = useState('');
+  const [instanceToSell, setInstanceToSell] = useState({});
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.7);
   const settings = {
@@ -75,6 +91,10 @@ const Collectible = ({
     getNFTSellBook({
       account: username,
     });
+    fetchInterests();
+    fetchOnMarket({
+      account: author,
+    });
     // getNFTInstance(4);
     return () => (mounted = false);
   }, [
@@ -86,6 +106,8 @@ const Collectible = ({
     getNFTInstances,
     getNFTInstance,
     getNFTSellBook,
+    fetchInterests,
+    fetchOnMarket,
     author,
   ]);
 
@@ -247,7 +269,7 @@ const Collectible = ({
                   </h4>
                 </Fragment>
               )}
-              { author !== username ? null : ((sellbook.length > 0) ? (
+              {author !== username ? null : sellbook.length > 0 ? (
                 <Fragment>
                   <h4>Already on Sale</h4>
                   <div className='collectible__action__buttons text-center my-3'>
@@ -262,36 +284,61 @@ const Collectible = ({
                         </tr>
                       </thead>
                       <tbody>
-                        {sellbook?.filter(inst => inst.series === series)?.map((instance) => {
-                          if (loading === true)
+                        {sellbook
+                          ?.filter((inst) => inst.series === series)
+                          ?.map((instance) => {
+                            if (loading === true)
+                              return (
+                                <tr className='text-center'>
+                                  <UploadLoader />
+                                </tr>
+                              );
                             return (
-                              <tr className='text-center'>
-                                <UploadLoader />
+                              <tr key={instance?.nft_id}>
+                                <th scope='row'>{instance?.nft_id}</th>
+                                <td>
+                                  {instance?.series
+                                    .replace(/_/g, "'s ~ ")
+                                    .replace(/-/g, ' ')
+                                    .toUpperCase()}
+                                </td>
+                                <td>{instance?.account}</td>
+                                <td>{instance.price}</td>
+                                <td>
+                                  <div className='flex'>
+                                    <button
+                                      className='btn btn-success btn-sm m-1'
+                                      onClick={() => {
+                                        setInstanceToSell(instance);
+                                        setIsShowPrice(true);
+                                      }}
+                                    >
+                                      <i className='fa fa-cogs'></i>
+                                    </button>
+                                    <button
+                                      type='button'
+                                      className='btn btn-info btn-sm m-1'
+                                      onClick={() => {
+                                        setInstanceToSell(instance);
+                                        setIsShowManage(true);
+                                      }}
+                                    >
+                                      <i className='fa fa-pencil-alt'></i>
+                                    </button>
+                                    <button
+                                      type='button'
+                                      className='btn btn-danger btn-sm m-1'
+                                      onClick={() => {
+                                        cancelSell(instance.nft_id);
+                                      }}
+                                    >
+                                      <i className='fa fa-times'></i>
+                                    </button>
+                                  </div>
+                                </td>
                               </tr>
                             );
-                          return (
-                            <tr key={instance?.nft_id}>
-                              <th scope='row'>{instance?.nft_id}</th>
-                              <td>
-                                {instance?.series
-                                  .replace(/_/g, "'s ~ ")
-                                  .replace(/-/g, ' ')
-                                  .toUpperCase()}
-                              </td>
-                              <td>{instance?.account}</td>
-                              <td>{instance.price}</td>
-                              <td>
-                                <button
-                                  onClick={() =>
-                                    sellToken(instance, 12, instance._id)
-                                  }
-                                >
-                                  Manage
-                                </button>
-                              </td>
-                            </tr>
-                          );
-                        })}
+                          })}
                       </tbody>
                     </table>
                     <ul></ul>
@@ -303,7 +350,7 @@ const Collectible = ({
                     No music here yet... Get creative and make some!
                   </h4>
                 </Fragment>
-              ))}
+              )}
             </div>
           </div>
           <hr />
@@ -325,6 +372,20 @@ const Collectible = ({
             </Slider>
           </div>
         </div>
+        <ManageModal
+          isShow={isShowManage}
+          setIsShow={setIsShowManage}
+          changePrice={changePrice}
+          instance={instanceToSell}
+        />
+        <SetPriceModal
+          isShow={isShowPrice}
+          setIsShow={setIsShowPrice}
+          setPrice={setPrice}
+          price={price}
+          instance={instanceToSell}
+          sellToken={sellToken}
+        />
       </Layout>
     </Fragment>
   );
@@ -339,8 +400,12 @@ export default connect(mapStateToProps, {
   getCollectibles,
   sellToken,
   buyToken,
+  changePrice,
+  cancelSell,
   getNFTDefinition,
   getNFTInstances,
   getNFTInstance,
   getNFTSellBook,
+  fetchInterests,
+  fetchOnMarket,
 })(Collectible);

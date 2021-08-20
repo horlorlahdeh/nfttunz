@@ -50,9 +50,6 @@ const ManageModal = ({ isShow, setIsShow, changePrice, instance }) => {
               >
                 Change Price
               </button>
-              <button type='button' className='btn btn-danger'>
-                Cancel Sell
-              </button>
             </div>
           </div>
         </div>

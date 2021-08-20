@@ -83,7 +83,6 @@ const MarketCollectible = ({
   const author = series.substring(0, authorEnd);
   useEffect(() => {
     mounted = true;
-    console.log(author);
     getCollectible(series);
     getCollectibles();
     getNFTDefinition();
@@ -262,11 +261,6 @@ const MarketCollectible = ({
                                           onClick={() => {
                                             setInstanceToSell(instance);
                                             setIsShowPrice(true);
-                                            // sellToken(
-                                            //   instance,
-                                            //   12,
-                                            //   instance.nft_id
-                                            // );
                                           }}
                                         >
                                           <i className='fa fa-cogs'></i>
