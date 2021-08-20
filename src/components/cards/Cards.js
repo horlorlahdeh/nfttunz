@@ -3,7 +3,7 @@ import Card from "./Card";
 import uuid from "uuid";
 import { connect } from "react-redux";
 
-const Cards = ({ songs, settings: { categories }, showPlayer, handleShowPlayer, setFile, setThumbnail }) => {
+const Cards = ({ songs, settings: { categories }, showPlayer, handleShowPlayer, setFile, setThumbnail, market }) => {
   return (
     <Fragment>
      
@@ -28,6 +28,7 @@ const Cards = ({ songs, settings: { categories }, showPlayer, handleShowPlayer, 
               setThumbnail={setThumbnail}
               price={price}
               symbol={symbol}
+              market={market}
             />
           </div>
         );

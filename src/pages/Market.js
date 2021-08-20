@@ -57,7 +57,7 @@ const Market = ({
               </div>
             </div>
             <div className='row'>
-              <Cards songs={market} />
+              <Cards songs={market} market={true} />
             </div>
           </div>
         </section>

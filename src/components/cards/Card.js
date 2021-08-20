@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
 const Card = ({
   thumbnail,
@@ -13,7 +13,10 @@ const Card = ({
   handleShowPlayer,
   setFile,
   setThumbnail,
-  carouselClass, price, symbol
+  carouselClass,
+  price,
+  symbol,
+  market,
 }) => {
   const handleNowPlaying = () => {
     setFile(file);
@@ -34,14 +37,20 @@ const Card = ({
         </div>
         {price && (
           <div className='price__wrapper'>
-            <h6>{price} {symbol}</h6>
+            <h6>
+              {price} {symbol}
+            </h6>
           </div>
         )}
         <div className='play__button'>
           <button onClick={() => handleNowPlaying()}>Play now</button>
           <Link
             style={{ color: 'lightgray', fontSize: '11px', marginLeft: '4px' }}
-            to={`/collectible/${series}`}
+            to={
+              market === true
+                ? `/market/${series}`
+                : `/collectible/${series}`
+            }
           >
             view
           </Link>

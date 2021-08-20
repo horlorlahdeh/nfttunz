@@ -6,7 +6,7 @@ const intialState = {
   categories: [],
   filters: [],
   currency: "",
-  nft_symbol: "TUNES",
+  nft_symbol: "TUNEZ",
   nodes: [],
   maintenance: false,
   market_fee: 1000,

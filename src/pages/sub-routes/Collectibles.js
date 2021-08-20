@@ -65,6 +65,7 @@ const Collectibles = ({
               handleShowPlayer={setShowPlayer}
               setFile={setFile}
               setThumbnail={setThumbnail}
+              market={false}
             />
           </div>
           <div className='arrow__wrapper right__'>

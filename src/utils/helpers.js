@@ -43,3 +43,15 @@ export const uploadFile = async (file, type) => {
     console.log(err.message);
   }
 };
+
+export const arrayChunk = (array, size = 20) => {
+  const chunkedArray = [];
+  let index = 0;
+
+  while (index < array.length) {
+    chunkedArray.push(array.slice(index, size + index));
+    index += size;
+  }
+
+  return chunkedArray;
+};

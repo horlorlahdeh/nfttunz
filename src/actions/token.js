@@ -94,3 +94,50 @@ export const sellToken = (tokenPayload, price, nft) => async dispatch => {
     console.log(err.message)
   }
 }
+export const buyToken = (tokenPayload, price, nft) => async dispatch => {
+  try {
+    const nfts =[]
+    nfts.push(nft.toString());
+     const settings = await store.getState().settings;
+     const username = await store.getState().users.username;
+     const fee = toFixedWithoutRounding(
+       settings.token_issuance_base_fee +
+         settings.token_issuance_fee * tokenPayload.editions,
+       3
+     );
+     const json = {
+       contractName: 'nftmarket',
+       contractAction: 'buy',
+       contractPayload: {
+         symbol: settings.nft_symbol,
+         nfts,
+         marketAccount: 'nfttunz',
+         expPrice: price.toString(),
+         expPriceSymbol: settings.currency
+       },
+     };
+     console.log(json);
+     const jsonData = {
+       id: settings.sidechain_id,
+       key: "Active",
+       data: json,
+       message: "Buy NFT",
+       eventName: "nft-buy-successful",
+     };
+     window.hive_keychain.requestCustomJson(
+       username,
+       jsonData.id,
+       jsonData.key,
+       JSON.stringify(jsonData.data),
+       jsonData.message,
+       (r) => {
+         if (r.success) {
+           console.log(r);
+           setToastNotification(r.message, "success");
+         }
+       }
+     );
+  } catch (err) {
+    console.log(err.message)
+  }
+}

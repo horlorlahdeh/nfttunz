@@ -1,19 +1,19 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { connect } from "react-redux";
-import Layout from "../components/Layout";
-import AudioPlayer from "react-h5-audio-player";
-import VideoPlayer from "react-video-markers";
-import Slider from "react-slick";
-import { getCollectible, getCollectibles } from "../actions/collectibles";
-import Card from "../components/cards/Card";
-import { sellToken } from "../actions/token";
+import React, { Fragment, useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import Layout from '../components/Layout';
+import AudioPlayer from 'react-h5-audio-player';
+import VideoPlayer from 'react-video-markers';
+import Slider from 'react-slick';
+import { getCollectible, getCollectibles } from '../actions/collectibles';
+import Card from '../components/cards/Card';
+import { sellToken, buyToken } from '../actions/token';
 import {
   getNFTInstances,
   getNFTInstance,
   getNFTDefinition,
   getNFTSellBook,
-} from "../actions/nfts";
-import UploadLoader from "../components/UploadLoader";
+} from '../actions/nfts';
+import UploadLoader from '../components/UploadLoader';
 
 let mounted = false;
 const Collectible = ({
@@ -25,9 +25,10 @@ const Collectible = ({
   getNFTInstance,
   getNFTSellBook,
   sellToken,
+  buyToken,
   collectibles: { collectible, collectibles },
   username,
-  nfts: { instances, loading },
+  nfts: { instances, sellbook, loading },
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.7);
@@ -35,15 +36,15 @@ const Collectible = ({
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 6,
+    slidesToShow: 3,
     slidesToScroll: 1,
   };
   const handleProgress = (e) => {
-    console.log("Current time: ", e.target.currentTime);
+    console.log('Current time: ', e.target.currentTime);
   };
 
   const handleDuration = (duration) => {
-    console.log("Duration: ", duration);
+    console.log('Duration: ', duration);
   };
   const handlePlay = () => {
     setIsPlaying(true);
@@ -57,10 +58,10 @@ const Collectible = ({
   const {
     params: { series },
   } = match;
-  const authorEnd = series.indexOf('_')
-  const author = series.substring(0, authorEnd)
+  const authorEnd = series.indexOf('_');
+  const author = series.substring(0, authorEnd);
   useEffect(() => {
-    console.log(author)
+    console.log(author);
     mounted = true;
     getCollectible(series);
     getCollectibles();
@@ -74,7 +75,7 @@ const Collectible = ({
     getNFTSellBook({
       account: username,
     });
-    getNFTInstance(4);
+    // getNFTInstance(4);
     return () => (mounted = false);
   }, [
     series,
@@ -84,43 +85,44 @@ const Collectible = ({
     getNFTDefinition,
     getNFTInstances,
     getNFTInstance,
-    getNFTSellBook, author
+    getNFTSellBook,
+    author,
   ]);
 
   return (
     <Fragment>
       <Layout>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="collectible__title mt-3">
-                <h2 className="text-center">{collectible?.name}</h2>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-12'>
+              <div className='collectible__title mt-3'>
+                <h2 className='text-center'>{collectible?.name}</h2>
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-1"></div>
-            <div className="col-md-10">
+          <div className='row'>
+            <div className='col-md-1'></div>
+            <div className='col-md-10'>
               <div
                 className={`file__player mt-4 ${
-                  collectible?.type === "audio" && "w-75"
+                  collectible?.type === 'audio' && 'w-75'
                 }`}
               >
-                {collectible?.type === "audio" ? (
-                  <div style={{ width: "100%" }}>
-                    <div className="audio__thumbnail">
+                {collectible?.type === 'audio' ? (
+                  <div style={{ width: '100%' }}>
+                    <div className='audio__thumbnail'>
                       <img
                         src={collectible?.thumbnail}
-                        alt="thumbnail"
-                        width="100%"
-                        height="350px"
-                        style={{ objectFit: "cover" }}
+                        alt='thumbnail'
+                        width='100%'
+                        height='350px'
+                        style={{ objectFit: 'cover' }}
                       />
                     </div>
                     <AudioPlayer
                       autoPlay
                       src={collectible?.file}
-                      onPlay={(e) => console.log("onPlay")}
+                      onPlay={(e) => console.log('onPlay')}
                       // other props here
                     />
                   </div>
@@ -139,74 +141,77 @@ const Collectible = ({
                   )
                 )}
               </div>
+              <Fragment>
+                <div className='collectible__description mt-3'>
+                  <p className='text-center'>
+                    <strong>Description:</strong> {collectible?.description}
+                  </p>
+                  <p className='text-center'>
+                    <strong>Notes:</strong> {collectible?.notes}
+                  </p>
+                  <p className='text-center'>
+                    <strong>Type:</strong> {collectible?.type}
+                  </p>
+                  <p className='text-center'>
+                    <strong>Tags:</strong>{' '}
+                    {collectible?.tags?.map((tag, index) => (
+                      <span key={index}>#{tag} </span>
+                    ))}
+                  </p>
+                  <p className='text-center'>
+                    <strong>Featured:</strong>{' '}
+                    {collectible?.featured === false ? 'false' : 'true'}
+                  </p>
+                  <p className='text-center'>
+                    <strong>NSFW:</strong>{' '}
+                    {collectible?.nsfw === false ? 'false' : 'true'}
+                  </p>
+                  <p className='text-center'>
+                    <strong>Published:</strong>{' '}
+                    {collectible?.published === false ? 'false' : 'true'}
+                  </p>
+                  <p className='text-center'>
+                    <strong>Creator:</strong> {collectible?.creator}
+                  </p>
+                </div>
+              </Fragment>
               {collectibles.length > 0 ? (
                 <Fragment>
-                  <div className="collectible__description mt-3">
-                    <p className="text-center">
-                      <strong>Description:</strong> {collectible?.description}
-                    </p>
-                    <p className="text-center">
-                      <strong>Notes:</strong> {collectible?.notes}
-                    </p>
-                    <p className="text-center">
-                      <strong>Type:</strong> {collectible?.type}
-                    </p>
-                    <p className="text-center">
-                      <strong>Tags:</strong>{" "}
-                      {collectible?.tags?.map((tag, index) => (
-                        <span key={index}>#{tag} </span>
-                      ))}
-                    </p>
-                    <p className="text-center">
-                      <strong>Featured:</strong>{" "}
-                      {collectible?.featured === false ? "false" : "true"}
-                    </p>
-                    <p className="text-center">
-                      <strong>NSFW:</strong>{" "}
-                      {collectible?.nsfw === false ? "false" : "true"}
-                    </p>
-                    <p className="text-center">
-                      <strong>Published:</strong>{" "}
-                      {collectible?.published === false ? "false" : "true"}
-                    </p>
-                    <p className="text-center">
-                      <strong>Creator:</strong> {collectible?.creator}
-                    </p>
-                  </div>
-                  <div className="collectible__action__buttons text-center my-3">
-                    <table className="table table-bordered">
+                  <h4>Available for Sale</h4>
+                  <div className='collectible__action__buttons text-center my-3'>
+                    <table className='table table-bordered'>
                       <thead>
                         <tr>
-                          <th scope="col">ID</th>
-                          <th scope="col">Series</th>
-                          <th scope="col">Creator</th>
-                          <th scope="col">Rights</th>
-                          <th scope="col">Action</th>
+                          <th scope='col'>ID</th>
+                          <th scope='col'>Series</th>
+                          <th scope='col'>Creator</th>
+                          <th scope='col'>Rights</th>
+                          <th scope='col'>Action</th>
                         </tr>
                       </thead>
                       <tbody>
                         {instances?.map((instance) => {
                           if (loading === true)
                             return (
-                              <tr className="text-center">
+                              <tr className='text-center'>
                                 <UploadLoader />
                               </tr>
                             );
                           return (
                             <tr key={instance?._id}>
-                              <th scope="row">{instance?._id}</th>
+                              <th scope='row'>{instance?._id}</th>
                               <td>
                                 {instance?.properties.series
                                   .replace(/_/g, "'s ~ ")
-                                  .replace(/-/g, " ")
+                                  .replace(/-/g, ' ')
                                   .toUpperCase()}
                               </td>
                               <td>{instance?.account}</td>
                               <td>
                                 {JSON.parse(instance.properties.metadata)
                                   .rights === 1
-                                  ? "Private"
-                                  : "Public"}
+                                  ? 'Private'
+                                  : 'Public'}
                               </td>
                               <td>
                                 {instance.account === username ? (
@@ -218,7 +223,13 @@ const Collectible = ({
                                     Sell
                                   </button>
                                 ) : (
-                                  <button>Buy</button>
+                                  <button
+                                    onClick={() =>
+                                      buyToken(instance, 12, instance._id)
+                                    }
+                                  >
+                                    Buy
+                                  </button>
                                 )}
                               </td>
                             </tr>
@@ -231,15 +242,72 @@ const Collectible = ({
                 </Fragment>
               ) : (
                 <Fragment>
-                  <h4 className="text-center mt-3">
+                  <h4 className='text-center mt-3'>
                     No music here yet... Get creative and make some!
                   </h4>
                 </Fragment>
               )}
+              { author !== username ? null : ((sellbook.length > 0) ? (
+                <Fragment>
+                  <h4>Already on Sale</h4>
+                  <div className='collectible__action__buttons text-center my-3'>
+                    <table className='table table-bordered'>
+                      <thead>
+                        <tr>
+                          <th scope='col'>ID</th>
+                          <th scope='col'>Series</th>
+                          <th scope='col'>Creator</th>
+                          <th scope='col'>Price</th>
+                          <th scope='col'>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {sellbook?.filter(inst => inst.series === series)?.map((instance) => {
+                          if (loading === true)
+                            return (
+                              <tr className='text-center'>
+                                <UploadLoader />
+                              </tr>
+                            );
+                          return (
+                            <tr key={instance?.nft_id}>
+                              <th scope='row'>{instance?.nft_id}</th>
+                              <td>
+                                {instance?.series
+                                  .replace(/_/g, "'s ~ ")
+                                  .replace(/-/g, ' ')
+                                  .toUpperCase()}
+                              </td>
+                              <td>{instance?.account}</td>
+                              <td>{instance.price}</td>
+                              <td>
+                                <button
+                                  onClick={() =>
+                                    sellToken(instance, 12, instance._id)
+                                  }
+                                >
+                                  Manage
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                    <ul></ul>
+                  </div>
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <h4 className='text-center mt-3'>
+                    No music here yet... Get creative and make some!
+                  </h4>
+                </Fragment>
+              ))}
             </div>
           </div>
           <hr />
-          <div className="row">
+          <div className='row'>
             <Slider {...settings}>
               {collectibles.map((collec, index) => (
                 <Card
@@ -251,7 +319,7 @@ const Collectible = ({
                   genre={collec?.category}
                   duration={collec?.type}
                   series={collec?.series}
-                  carouselClass="mx-1"
+                  carouselClass='mx-1'
                 />
               ))}
             </Slider>
@@ -270,6 +338,7 @@ export default connect(mapStateToProps, {
   getCollectible,
   getCollectibles,
   sellToken,
+  buyToken,
   getNFTDefinition,
   getNFTInstances,
   getNFTInstance,

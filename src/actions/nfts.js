@@ -142,7 +142,16 @@ export const getNFTSellBook = (query, offset = 0, limit = 1000) => async dispatc
         limit,
       },
     };
-    const data = await contract(request);
+    let data = await contract(request);
+    data = data.map((c) => ({
+      account: c.account,
+      nft_id: Number(c.nftId),
+      series: c.grouping.series,
+      price: Number(c.price),
+      symbol: c.priceSymbol,
+      fee: c.fee,
+    }));
+    console.log('nftsellbook', data)
     dispatch({
       type: GET_NFT_SELLBOOK,
       payload: data

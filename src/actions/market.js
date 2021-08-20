@@ -12,7 +12,7 @@ export const getMarketListed = (params) => async dispatch => {
 export const getMarket = (params) => async dispatch => {
     try {
         const data = await axios.get(`market`)
-        console.log(data.data);
+        console.log('market', data.data);
         dispatch({
             type: GET_MARKET,
             payload: data.data

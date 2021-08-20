@@ -23,7 +23,7 @@ export const collectiblesReducer = (state = intialState, action) => {
     case GET_USER_COLLECTIBLES:
       return {
         ...state,
-        user_collectibles: payload,
+        user_collectible: payload,
         loading: false,
       };
     case GET_COLLECTIBLE:

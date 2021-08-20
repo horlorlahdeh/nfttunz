@@ -661,6 +661,9 @@ select:focus-visible {
 }
 /* Mobile Stuff */
 @media screen and (max-width: 600px) {
+  .music__card__wrapper {
+    margin: 0px 50px;
+  }
   .nfttunz__navbar {
     flex-direction: column;
   }
@@ -677,6 +680,7 @@ select:focus-visible {
   }
   .tags__wrapper {
     display: block;
+    text-align: center;
   }
   .tag__wrapper {
     margin-bottom: 10px;
