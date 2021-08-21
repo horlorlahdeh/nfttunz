@@ -23,6 +23,9 @@ const Market = ({
     e.preventDefault();
     searchCollectibles(search);
   };
+  const handleSearch = (q) => {
+    searchCollectibles(q)
+  }
   useEffect(() => {
     getCollectibles();
     getMarket();
@@ -61,12 +64,18 @@ const Market = ({
             <div className='row'>
               <div className='col-md-12'>
                 <div className='tags__main__wrapper'>
-                  <Tags tags={filters} />
+                  <Tags tags={filters} handleSearch={handleSearch} />
                 </div>
               </div>
             </div>
             <div className='row'>
-              {loading ? <Loader /> : <Cards songs={market} market={true} />}
+              {loading ? (
+                <Loader />
+              ) : market.length < 1 ? (
+                <h4 className='text-center p-5'>No data available for your filter</h4>
+              ) : (
+                <Cards songs={market} market={true} />
+              )}
             </div>
           </div>
         </section>

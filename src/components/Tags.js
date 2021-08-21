@@ -4,13 +4,13 @@ import uuid from "uuid";
 import { connect } from 'react-redux';
 
 
-const Tags = ({ tags, settings: { categories } }) => {
+const Tags = ({ tags, settings: { categories }, handleSearch }) => {
   return (
     <Fragment>
       <div className="tags__wrapper">
         {tags.map((tag) => {
           const id = uuid();
-          return <Tag key={id} title={tag.title} icon={tag.icon} />;
+          return <Tag key={id} title={tag.title} icon={tag.icon} handleSearch={handleSearch} />;
         })}
       </div>
     </Fragment>

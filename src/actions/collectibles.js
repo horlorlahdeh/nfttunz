@@ -198,7 +198,6 @@ export const fetchInterests =
 export const searchCollectibles = (query) => async dispatch => {
   try {
      const data = await axios.post(`/search`, {q: query});
-     console.log('search route', data.data);
      dispatch({
        type: SEARCH_COLLECTIBLES,
        payload: data.data,
