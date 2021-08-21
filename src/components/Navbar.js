@@ -93,7 +93,7 @@ const Navbar = ({ isShowLogIn, isShow, auth, logout, readNotifications }) => {
                     data-bs-toggle='dropdown'
                     aria-expanded='false'
                   >
-                    {auth.notifications > 0 && (
+                    {auth.notifications.length > 0 && (
                       <span className='notification'>
                         {auth.notifications.length}
                       </span>
@@ -104,6 +104,20 @@ const Navbar = ({ isShowLogIn, isShow, auth, logout, readNotifications }) => {
                     className='dropdown-menu dropdown-menu-lg-end p-0'
                     aria-labelledby='dropdownMenuButton1'
                   >
+                    {auth.notifications.length > 1 && (
+                      <button
+                        className='bg-transparent mark-as-read-button'
+                        onClick={() =>
+                          readNotifications(
+                            auth.notifications.map(
+                              (notification) => notification.id
+                            )
+                          )
+                        }
+                      >
+                        mark as all read
+                      </button>
+                    )}
                     {auth.notifications.length < 1 ? (
                       <p className='p-2 border-bottom notification-paragraph'>
                         You currently have no notifications at the moment
@@ -127,7 +141,9 @@ const Navbar = ({ isShowLogIn, isShow, auth, logout, readNotifications }) => {
                             </p>
                             <button
                               className='bg-transparent mark-as-read-button'
-                              onClick={() => readNotifications(notification.id)}
+                              onClick={() =>
+                                readNotifications([notification.id])
+                              }
                             >
                               mark as read
                             </button>

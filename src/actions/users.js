@@ -94,7 +94,7 @@ export const logout = () => async dispatch => {
 export const getNotifications = () => async dispatch => {
   try {
     const data = await axios.get('/users/notifications');
-    console.log('notifications', data.data)
+    console.log('notifications', data.data.length)
     const filteredData = data.data.filter(d => d.read === false);
     dispatch({
       type: GET_NOTIFICATIONS,
@@ -104,10 +104,10 @@ export const getNotifications = () => async dispatch => {
   console.log(err.message);
   }
 }
-export const readNotifications = (id) => async dispatch => {
+export const readNotifications = (ids) => async dispatch => {
   try {
-    const ids = [];
-    ids.push(id);
+    // const ids = [];
+    // ids.push(id);
     console.log(ids);
     const data = await axios.post('/users/notifications', {ids: ids});
     console.log('notifications', data.data)
