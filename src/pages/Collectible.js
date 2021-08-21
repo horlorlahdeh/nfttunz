@@ -238,9 +238,11 @@ const Collectible = ({
                               <td>
                                 {instance.account === username ? (
                                   <button
-                                    onClick={() =>
-                                      sellToken(instance, 12, instance._id)
-                                    }
+                                    onClick={() => {
+                                      setInstanceToSell(instance);
+                                      console.log(instanceToSell)
+                                      setIsShowPrice(true);
+                                    }}
                                   >
                                     Sell
                                   </button>

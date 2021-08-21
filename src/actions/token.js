@@ -49,6 +49,8 @@ export const createToken = (tokenPayload) => async (dispatch) => {
 
 export const sellToken = (tokenPayload, price, nft) => async (dispatch) => {
   try {
+    console.log(price);
+    console.log(nft)
     const nfts = [];
     nfts.push(nft.toString());
     const settings = await store.getState().settings;

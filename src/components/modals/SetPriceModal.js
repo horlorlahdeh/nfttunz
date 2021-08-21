@@ -30,7 +30,8 @@ const SetPriceModal = ({
             </div>
             <div className='modal-body'>
               <p className='my-2 mb-3'>
-                Enter the price you are intending to sell this edition for, you can always modify the price at a future time.
+                Enter the price you are intending to sell this edition for, you
+                can always modify the price at a future time.
               </p>
               <div>
                 <input
@@ -56,7 +57,10 @@ const SetPriceModal = ({
               <button
                 type='button'
                 className='btn btn-danger'
-                onClick={() => sellToken(instance, price, instance.nft_id)}
+                onClick={() => {
+                  sellToken(instance, price, instance._id);
+                  setIsShow(false);
+                }}
               >
                 Sell
               </button>
