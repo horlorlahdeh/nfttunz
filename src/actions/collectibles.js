@@ -7,6 +7,7 @@ import {
   SET_PAGINATION,
   SET_ON_MARKET,
   SET_SERIES,
+  SEARCH_COLLECTIBLES,
 } from './types';
 import axios from '../utils/axios';
 import store from '../store';
@@ -193,3 +194,16 @@ export const fetchInterests =
       console.log(e.message);
     }
   };
+
+export const searchCollectibles = (query) => async dispatch => {
+  try {
+     const data = await axios.post(`/search`, {q: query});
+     console.log('search route', data.data);
+     dispatch({
+       type: SEARCH_COLLECTIBLES,
+       payload: data.data,
+     });
+  } catch (err) {
+    console.log(err.message)
+  }
+}

@@ -11,7 +11,7 @@ import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import store from './store';
 import { useEffect } from 'react';
-import { loadUser } from './actions/users';
+import { loadUser, getNotifications } from './actions/users';
 import setAuthToken from './utils/setAuthToken';
 import 'react-toastify/dist/ReactToastify.css';
 import { getChainSettings } from './actions/settings';
@@ -30,6 +30,7 @@ function App() {
   useEffect(() => {
     store.dispatch(loadUser());
     store.dispatch(getChainSettings());
+    store.dispatch(getNotifications())
   }, []);
   return (
     <div className='App'>

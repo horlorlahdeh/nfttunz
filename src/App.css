@@ -146,12 +146,52 @@ input:focus {
   font-weight: bold;
   font-size: 14px;
 }
-.nfftunz__avatar__wrapper {
+.nfttunz__avatar__wrapper {
   background-color: #eee;
   border-radius: 50%;
   padding: 6px;
 }
-.nfftunz__avatar__wrapper img {
+.nfttunz__notification__wrapper {
+  position: relative;
+  background-color: #eee;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 6px;
+}
+.nfttunz__notification__wrapper button i {
+  font-size: 20px!important;
+}
+.notification {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 999;
+  background-color: red;
+  color:#fff;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 15px;
+  font-size: 8px;
+  font-weight: 900;
+}
+.notification-paragraph {
+  background-color: rgb(245, 245, 245);
+  padding: 0px 15px;
+  box-sizing: border-box;
+  min-width: 300px;
+}
+.mark-as-read-button {
+  font-size: 10px;
+  font-weight: bolder;
+
+}
+.nfttunz__avatar__wrapper img {
   border-radius: 50%;
 }
 .nfttunz__main__header__overlay {
@@ -159,7 +199,7 @@ input:focus {
   background-color: rgba(0, 0, 0, 0.452);
 }
 .nfttunz__main__header {
-  background-image: url("https://images.pexels.com/photos/2111015/pexels-photo-2111015.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-image: url('https://images.pexels.com/photos/2111015/pexels-photo-2111015.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
   margin-bottom: 50px;
   background-size: cover;
 }
@@ -646,8 +686,6 @@ select:focus-visible {
   color: rgb(189, 184, 184);
 }
 
-
-
 /* Medium */
 @media screen and (min-width: 1700px) {
   .nfttunz__navbar__brand {
@@ -685,7 +723,7 @@ select:focus-visible {
   .tag__wrapper {
     margin-bottom: 10px;
   }
-  .nfftunz__avatar__wrapper {
+  .nfttunz__avatar__wrapper {
     margin-top: 8px;
     display: none;
   }

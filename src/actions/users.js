@@ -1,7 +1,14 @@
-import { LOGIN_SUCCESS, AUTH_ERROR, SET_USER, LOGOUT } from "./types";
+import { LOGIN_SUCCESS, AUTH_ERROR, SET_USER, LOGOUT, GET_NOTIFICATIONS, READ_NOTIFICATIONS } from "./types";
 import { setToastNotification } from "../utils/helpers";
 import axios from "../utils/axios";
 import setAuthToken from "../utils/setAuthToken";
+
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+   
+  },
+};
 
 export const login = (username) => async (dispatch) => {
     try {
@@ -84,6 +91,35 @@ export const logout = () => async dispatch => {
   dispatch({type: LOGOUT})
 }
 
+export const getNotifications = () => async dispatch => {
+  try {
+    const data = await axios.get('/users/notifications');
+    console.log('notifications', data.data)
+    const filteredData = data.data.filter(d => d.read === false);
+    dispatch({
+      type: GET_NOTIFICATIONS,
+      payload: filteredData
+    })
+  } catch (err) {
+  console.log(err.message);
+  }
+}
+export const readNotifications = (id) => async dispatch => {
+  try {
+    const ids = [];
+    ids.push(id);
+    console.log(ids);
+    const data = await axios.post('/users/notifications', {ids: ids});
+    console.log('notifications', data.data)
+    
+    dispatch({
+      type: READ_NOTIFICATIONS,
+      payload: data.data
+    })
+  } catch (err) {
+  console.log(err.message);
+  }
+}
 
 
 

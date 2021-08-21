@@ -2,11 +2,11 @@ import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import logo from '../assets/images/logo_gray_scale.png';
-import { logout } from '../actions/users';
+import { logout, readNotifications } from '../actions/users';
 
 // import { users } from "../reducers/users";
 
-const Navbar = ({ isShowLogIn, isShow, auth, logout }) => {
+const Navbar = ({ isShowLogIn, isShow, auth, logout, readNotifications }) => {
   const [search, setSearch] = useState('');
 
   const toogleAction = async () => {
@@ -84,19 +84,73 @@ const Navbar = ({ isShowLogIn, isShow, auth, logout }) => {
               </div>
             </form>
             {auth.authenticated && (
-              <div className='nfftunz__avatar__wrapper margin__left'>
-                <Link to='/profile'>
-                  <img
-                    src={
-                      auth.avatar
-                        ? auth.avatar
-                        : 'https://nftshowroom.dtools.dev/api/avatar/bait002'
-                    }
-                    alt={auth.username}
-                    width={30}
-                  />
-                </Link>
-              </div>
+              <Fragment>
+                <div className='dropdown nfttunz__notification__wrapper margin__left'>
+                  <button
+                    className='dropdown-toggl'
+                    type='button'
+                    id='dropdownMenuButton1'
+                    data-bs-toggle='dropdown'
+                    aria-expanded='false'
+                  >
+                    {auth.notifications > 0 && (
+                      <span className='notification'>
+                        {auth.notifications.length}
+                      </span>
+                    )}
+                    <i className='fas fa-bell'></i>
+                  </button>
+                  <ul
+                    className='dropdown-menu dropdown-menu-lg-end p-0'
+                    aria-labelledby='dropdownMenuButton1'
+                  >
+                    {auth.notifications.length < 1 ? (
+                      <p className='p-2 border-bottom notification-paragraph'>
+                        You currently have no notifications at the moment
+                      </p>
+                    ) : (
+                      auth.notifications.map((notification) => {
+                        return (
+                          <li key={notification.id}>
+                            <p className='p-2 border-bottom notification-paragraph'>
+                              You have just{' '}
+                              {notification.type === 'sell' ? 'sold' : 'bought'}{' '}
+                              a song: <br />
+                              <strong>Editon: </strong>
+                              {JSON.parse(notification.data).edition} of series{' '}
+                              {JSON.parse(notification.data).series} to{' '}
+                              {JSON.parse(notification.data).buyer} for{' '}
+                              {JSON.parse(notification.data).price}{' '}
+                              <strong>
+                                {JSON.parse(notification.data).symbol}
+                              </strong>
+                            </p>
+                            <button
+                              className='bg-transparent mark-as-read-button'
+                              onClick={() => readNotifications(notification.id)}
+                            >
+                              mark as read
+                            </button>
+                          </li>
+                        );
+                      })
+                    )}
+                  </ul>
+                </div>
+                <div className='nfttunz__avatar__wrapper margin__left'>
+                  <Link to='/profile'>
+                    <img
+                      src={
+                        auth.avatar
+                          ? auth.avatar
+                          : 'https://nftshowroom.dtools.dev/api/avatar/bait002'
+                      }
+                      alt={auth.username}
+                      width={30}
+                    />
+                  </Link>
+                </div>
+              </Fragment>
             )}
 
             <div className='dropdown nfttunz__login__button margin__left d-flex'>
@@ -131,10 +185,7 @@ const Navbar = ({ isShowLogIn, isShow, auth, logout }) => {
                   </Link>
                 </li>
                 <li>
-                  <button
-                    onClick={toogleAction}
-                    className='dropdown-item'
-                  >
+                  <button onClick={toogleAction} className='dropdown-item'>
                     Logout
                   </button>
                 </li>
@@ -151,4 +202,4 @@ const mapStateToProps = (state) => ({
   auth: state.users,
 });
 
-export default connect(mapStateToProps, { logout })(Navbar);
+export default connect(mapStateToProps, { logout, readNotifications })(Navbar);
