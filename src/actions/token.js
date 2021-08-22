@@ -55,11 +55,11 @@ export const sellToken = (tokenPayload, price, nft) => async (dispatch) => {
     nfts.push(nft.toString());
     const settings = await store.getState().settings;
     const username = await store.getState().users.username;
-    const fee = toFixedWithoutRounding(
-      settings.token_issuance_base_fee +
-        settings.token_issuance_fee * tokenPayload.editions,
-      3
-    );
+    // const fee = toFixedWithoutRounding(
+    //   settings.token_issuance_base_fee +
+    //     settings.token_issuance_fee * tokenPayload.editions,
+    //   3
+    // );
     const json = {
       contractName: 'nftmarket',
       contractAction: 'sell',
@@ -101,11 +101,11 @@ export const buyToken = (tokenPayload, price, nft) => async (dispatch) => {
     nfts.push(nft.toString());
     const settings = await store.getState().settings;
     const username = await store.getState().users.username;
-    const fee = toFixedWithoutRounding(
-      settings.token_issuance_base_fee +
-        settings.token_issuance_fee * tokenPayload.editions,
-      3
-    );
+    // const fee = toFixedWithoutRounding(
+    //   settings.token_issuance_base_fee +
+    //     settings.token_issuance_fee * tokenPayload.editions,
+    //   3
+    // );
     const json = {
       contractName: 'nftmarket',
       contractAction: 'buy',

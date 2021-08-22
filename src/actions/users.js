@@ -3,12 +3,6 @@ import { setToastNotification } from "../utils/helpers";
 import axios from "../utils/axios";
 import setAuthToken from "../utils/setAuthToken";
 
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-   
-  },
-};
 
 export const login = (username) => async (dispatch) => {
     try {

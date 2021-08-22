@@ -19,7 +19,6 @@ import {
   getNFTSellBook,
 } from '../actions/nfts';
 import UploadLoader from '../components/UploadLoader';
-import { Link } from 'react-router-dom';
 import ManageModal from '../components/modals/ManageModal';
 import SetPriceModal from '../components/modals/SetPriceModal';
 
